@@ -88,9 +88,10 @@ async def on_message(message):
 
 async def getCard(data):
     for card in data:
-        logger.info(f"Sending card: {card}")
-        await channel.send(f"kv {card}")
-        await asyncio.sleep(10)
+        if card:
+            logger.info(f"Sending card: {card}")
+            await channel.send(f"kv {card}")
+            await asyncio.sleep(10)
     
 
 
