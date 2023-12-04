@@ -49,12 +49,39 @@ TOKEN = config['token']
 channel = None
 karuta_bot = None
 
+data = []
+
 bot = commands.Bot(command_prefix='!', self_bot=True)
 
 @bot.event
 async def on_ready():
     global channel, karuta_bot
-    channel = bot.get_channel(1181224154511462413)  # Replace with your channel ID
-    karuta_bot = await bot.fetch_user(646937666251915264)  # Get the User object for the Karuta bot
+    channel = bot.get_channel(1181224154511462413)
+    karuta_bot = await bot.fetch_user(646937666251915264)
+
+@bot.event
+async def on_message(message):
+    if message.author.name == 'Bolond' and message.embeds:
+        embed = message.embeds[0]
+        logger.info(f"Received embed: {embed.description}")
+        try:
+            data = embed.description.split(';')
+            logger.info(f"{data}")
+            await getCard(data)
+        except Exception:
+            logger.error(f"Failed to parse embed: {embed.description}")
+            return
+        
+    if message.author == karuta_bot and message.embeds:
+        embed = message.embeds[0]
+        logger.info(f"Picture: {embed.image.url}")
+        # await channel.send(embed.image.url.split('?')[0]) vissza az api-nak
+
+async def getCard(data):
+    for card in data:
+        await channel.send(f"kv {card}")
+        await asyncio.sleep(10)
+    
+
 
 bot.run(TOKEN)
