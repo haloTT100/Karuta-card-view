@@ -47,6 +47,7 @@ with open('trianon.json', 'r', encoding='utf8') as f:
 
 TOKEN = config['token']
 channel = None
+messageLoader = None
 karuta_bot = None
 
 data = []
@@ -55,22 +56,30 @@ bot = commands.Bot(command_prefix='!', self_bot=True)
 
 @bot.event
 async def on_ready():
-    global channel, karuta_bot
+    global channel, messageLoader,  karuta_bot
     channel = bot.get_channel(1181224154511462413)
+    messageLoader = bot.get_channel(1181330761270444143)
     karuta_bot = await bot.fetch_user(646937666251915264)
 
 @bot.event
 async def on_message(message):
-    if message.author.name == 'Bolond' and message.embeds:
-        embed = message.embeds[0]
-        logger.info(f"Received embed: {embed.description}")
-        try:
-            data = embed.description.split(';')
-            logger.info(f"{data}")
-            await getCard(data)
-        except Exception:
-            logger.error(f"Failed to parse embed: {embed.description}")
-            return
+    if message.channel == messageLoader: # Load embeds
+        messages = []
+        messages = [msg async for msg in messageLoader.history(limit=100)]
+        await asyncio.sleep(1)
+        await messageLoader.purge(limit=100)
+        for msg in messages:
+            if msg.embeds:
+                embed = msg.embeds[0]
+                try:
+                    data.extend(embed.description.split(';'))
+                except Exception:
+                    logger.error(f"Failed to parse embed: {embed.description}")
+                    return
+        messages = []
+        logger.info(f"{data}")
+        await getCard(data)
+
         
     if message.author == karuta_bot and message.embeds:
         embed = message.embeds[0]
@@ -79,6 +88,7 @@ async def on_message(message):
 
 async def getCard(data):
     for card in data:
+        logger.info(f"Sending card: {card}")
         await channel.send(f"kv {card}")
         await asyncio.sleep(10)
     
