@@ -66,7 +66,6 @@ async def on_message(message):
     if message.channel == messageLoader: # Load embeds
         messages = []
         messages = [msg async for msg in messageLoader.history(limit=100)]
-        await asyncio.sleep(1)
         await messageLoader.purge(limit=100)
         for msg in messages:
             if msg.embeds:
@@ -78,8 +77,10 @@ async def on_message(message):
                     return
         messages = []
         logger.info(f"{data}")
-        await getCard(data)
+        await channel.send(f"Loaded {len(data)} codes.")
 
+    if message.author.name == bot.user.name and f"Loaded {len(data)} codes." in message.content:
+        await getCard(data)
         
     if message.author == karuta_bot and message.embeds:
         embed = message.embeds[0]
@@ -92,7 +93,6 @@ async def getCard(data):
             logger.info(f"Sending card: {card}")
             await channel.send(f"kv {card}")
             await asyncio.sleep(10)
-    
 
 
 bot.run(TOKEN)
