@@ -49,6 +49,7 @@ TOKEN = config['token']
 channel = None
 messageLoader = None
 karuta_bot = None
+tempcard = None
 
 data = []
 
@@ -63,8 +64,9 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if message.channel == messageLoader: # Load embeds
-        messages = []
+    global tempcard
+
+    if message.channel == channel and message.author.name == 'Bolond' and message.content == 'Embeds sent!':
         messages = [msg async for msg in messageLoader.history(limit=100)]
         await messageLoader.purge(limit=100)
         for msg in messages:
@@ -75,6 +77,7 @@ async def on_message(message):
                 except Exception:
                     logger.error(f"Failed to parse embed: {embed.description}")
                     return
+                
         messages = []
         logger.info(f"{data}")
         await channel.send(f"Loaded {len(data)} codes.")
@@ -84,15 +87,24 @@ async def on_message(message):
         
     if message.author == karuta_bot and message.embeds:
         embed = message.embeds[0]
-        logger.info(f"Picture: {embed.image.url}")
-        # await channel.send(embed.image.url.split('?')[0]) vissza az api-nak
+        logger.info(f"Picture: {embed.image.url.split('?')[0]}")
+        await postCard(embed.image.url.split("?")[0], tempcard)
 
 async def getCard(data):
-    for card in data:
-        if card:
-            logger.info(f"Sending card: {card}")
-            await channel.send(f"kv {card}")
-            await asyncio.sleep(10)
+    global tempcard
+    while data:
+        tempcard = data.pop(0)
+        logger.info(f"Sending card: {tempcard}")
+        await channel.send(f"kv {tempcard}")
+        await asyncio.sleep(10)
+
+            
+async def postCard(url, code):
+    async with aiohttp.ClientSession() as session:
+        data = {"link": url,
+                "code": code}  # replace with your actual data
+        async with session.post('http://127.0.0.1/Karuta-card-view/website/saveLink.php', data=data) as resp:
+            logger.info(resp.status)
 
 
 bot.run(TOKEN)

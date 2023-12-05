@@ -69,12 +69,11 @@
                     }
                     sendToDiscord(codesOkay);
                 }
+                sendToDiscordAck();
                 return codes;
             }
         
-     function sendToDiscord(jsonArray) {
-    // Discord Webhook URL
-    //Bolond: https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT
+    function sendToDiscord(jsonArray) {
     var webhookUrl = "https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6VKftE2Oi4jWIVhadaLoKu7Ca2OjXhM1pIMQGdklXDjWYedrSwmpdXt_tH"; //message-loader webhook
 
         var request = new XMLHttpRequest();
@@ -85,6 +84,18 @@
         }
         request.send(JSON.stringify(params));
         console.log(JSON.stringify(jsonArray));
+        }
+
+    function sendToDiscordAck() {
+    var ackUrl = "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT"; //Bolond
+
+        var request = new XMLHttpRequest();
+        request.open("POST", ackUrl);
+        request.setRequestHeader('Content-type', 'application/json');
+        var params = {
+            content: "Embeds sent!"
+        }
+        request.send(JSON.stringify(params));
         }
         });
         </script>
