@@ -71,7 +71,7 @@
                         codesOkay += words[(i+1)*(l+1)]+";";
                         }
                     }
-                    if((i+1%2)==0){
+                    if((i+1)%2==0){
                         sendToDiscord(codesOkay, wh1);
                     }else{
                         sendToDiscord(codesOkay, wh2);
