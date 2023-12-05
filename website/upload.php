@@ -62,7 +62,7 @@
                 const words = codes.split(';');
                 let wordsCount = words.length;
                 let messageCount = Math.ceil(wordsCount/ 20);
-                
+                var waitPLS = 0;
                 for(let i = 0; i < messageCount; i++){
                     
                     let codesOkay = "";
@@ -73,11 +73,13 @@
                     }
                     if((i+1)%2==0){
                         setTimeout(() => sendToDiscord(codesOkay, wh1), 500*i);
+                        waitPLS += 500*i;
                     }else{
                         setTimeout(() => sendToDiscord(codesOkay, wh2), 500*i);
+                        waitPLS += 500*i;
                     }
                 }
-                sendToDiscordAck();
+                setTimeout(() => sendToDiscordAck(), waitPLS+500);
                 return codes;
             }
         
