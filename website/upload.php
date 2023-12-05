@@ -67,11 +67,20 @@
                     
                     let codesOkay = "";
                     for(let l  = 0; l < 20; l++){
-                        if(words[(i+1)*(l+1)] != null){
-                        codesOkay += words[(i+1)*(l+1)]+";";
+                        if(words[(i+1)*(l+1)] != null && words[(i+1)*(l+1)] != "" && words[(i+1)*(l+1)] != " "){
+                        codesOkay += words[(i+1)*(l+1)];
+                        if(l<20-1){
+                        codesOkay += ";";
+                        }
                         }
                     }
-                    codesOkay = codesOkay.slice(0, -1);
+                    
+                    if (codesOkay.length > 0 || codesOkay.charAt(codesOkay.length - 1) == ';') {
+   					
+  					  // Az utolsó karakter eltávolítása és a módosított string visszaadása
+   						 codesOkay.slice(0, -1);
+  					}
+  
                     if((i+1)%2==0){
                         setTimeout(() => sendToDiscord(codesOkay, wh1), 500*i);
                         waitPLS += 500*i;
