@@ -1,8 +1,8 @@
 <?php
 include "database.php";
-if(isset($_GET['link']) && isset($_GET['code'])){
+if(isset($_POST['link']) && isset($_POST['code'])){
     $conn = new kapcsolat();
-    $conn->saveLink($_GET['code'], $_GET['link']);
+    $conn->saveLink($_POST['code'], $_POST['link']);
     print("okés");
 
 }
