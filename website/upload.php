@@ -57,7 +57,7 @@
                 
                 const words = codes.split(';');
                 let wordsCount = words.length;
-                let messageCount = Math.round(wordsCount/ 400);
+                let messageCount = Math.ceil(wordsCount/ 400);
                 
                 for(let i = 0; i < messageCount; i++){
                     

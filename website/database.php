@@ -29,6 +29,7 @@ class kapcsolat{
     }
 
     public function saveLink($code, $link){
+        $checkSQL ="SELECT * FROM links (code, link) VALUES ('".$code."', '".$link."')";
         $sql="INSERT INTO links (code, link) VALUES ('".$code."', '".$link."')";
         $this->mysqli->query($sql);
         $last_id = $this->mysqli->insert_id;
