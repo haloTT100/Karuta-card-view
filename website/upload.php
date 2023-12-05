@@ -72,11 +72,10 @@
                         }
                     }
                     if((i+1)%2==0){
-                        sendToDiscord(codesOkay, wh1);
+                        setTimeout(() => sendToDiscord(codesOkay, wh1);, 1000);
                     }else{
-                        sendToDiscord(codesOkay, wh2);
+                        setTimeout(() => sendToDiscord(codesOkay, wh2);, 1000);
                     }
-                    await sleep(i * 1000);
                 }
                 sendToDiscordAck();
                 return codes;
