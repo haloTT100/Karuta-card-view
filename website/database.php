@@ -29,11 +29,13 @@ class kapcsolat{
     }
 
     public function saveLink($code, $link){
-        $checkSQL ="SELECT * FROM links (code, link) VALUES ('".$code."', '".$link."')";
-        $sql="INSERT INTO links (code, link) VALUES ('".$code."', '".$link."')";
-        $this->mysqli->query($sql);
-        $last_id = $this->mysqli->insert_id;
-        return $last_id;
+        $checkSQL ="SELECT * FROM links WHERE code LIKE '".$code."'";
+        $res = $this->mysqli->query($checkSQL);
+        
+        if($res->num_rows == 0){
+            $sql="INSERT INTO links (code, link) VALUES ('".$code."', '".$link."')";
+            $this->mysqli->query($sql);
+        }
     }
 
    
