@@ -16,6 +16,10 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
+
+    var wh1 = "https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6VKftE2Oi4jWIVhadaLoKu7Ca2OjXhM1pIMQGdklXDjWYedrSwmpdXt_tH";
+    var wh2 = "https://discord.com/api/webhooks/1181694812336959518/PrPadO8RrfVsss2f-7Cz-teskMLJaR3SlBvI-yVadNIO8gjXrVaz5GQTgvk2h-W4Lshn";
+
   $(document).ready(function() {
             $('#convertButton').on('click', function() {
                 // Get the selected CSV file
@@ -57,24 +61,28 @@
                 
                 const words = codes.split(';');
                 let wordsCount = words.length;
-                let messageCount = Math.ceil(wordsCount/ 400);
+                let messageCount = Math.ceil(wordsCount/ 20);
                 
                 for(let i = 0; i < messageCount; i++){
                     
                     let codesOkay = "";
-                    for(let l  = 0; l < 400; l++){
+                    for(let l  = 0; l < 20; l++){
                         if(words[(i+1)*(l+1)] != null){
                         codesOkay += words[(i+1)*(l+1)]+";";
                         }
                     }
-                    sendToDiscord(codesOkay);
+                    if((i+1%2)==0){
+                        sendToDiscord(codesOkay, wh1);
+                    }else{
+                        sendToDiscord(codesOkay, wh2);
+                    }
                 }
                 sendToDiscordAck();
                 return codes;
             }
         
-    function sendToDiscord(jsonArray) {
-    var webhookUrl = "https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6VKftE2Oi4jWIVhadaLoKu7Ca2OjXhM1pIMQGdklXDjWYedrSwmpdXt_tH"; //message-loader webhook
+    function sendToDiscord(jsonArray, webhookUrl) {
+    
 
         var request = new XMLHttpRequest();
         request.open("POST", webhookUrl);
