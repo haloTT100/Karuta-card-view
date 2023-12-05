@@ -76,6 +76,7 @@
                     }else{
                         sendToDiscord(codesOkay, wh2);
                     }
+                    await sleep(i * 1000);
                 }
                 sendToDiscordAck();
                 return codes;
@@ -106,6 +107,9 @@
         request.send(JSON.stringify(params));
         }
         });
+        function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
         </script>
 </body>
 </html>
