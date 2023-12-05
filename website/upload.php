@@ -71,6 +71,7 @@
                         codesOkay += words[(i+1)*(l+1)]+";";
                         }
                     }
+                    codesOkay = codesOkay.slice(0, -1);
                     if((i+1)%2==0){
                         setTimeout(() => sendToDiscord(codesOkay, wh1), 500*i);
                         waitPLS += 500*i;
