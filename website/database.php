@@ -82,7 +82,7 @@ class kapcsolat{
         
         $char_name = str_replace("'", "''", $char_name);
         $series = str_replace("'", "''", $series);
-        
+
         $sql='INSERT INTO links(
             code, 
             number, 
@@ -107,7 +107,7 @@ class kapcsolat{
                 "",
                 '.$userID.')';
 
-                print($sql);
+                //print($sql);
         $this->mysqli->query($sql);
     }
 
