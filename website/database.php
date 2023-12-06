@@ -100,6 +100,7 @@ class kapcsolat{
                 '.$effort.',
                 "",
                 '.$userID.')';
+                print($sql);
         $this->mysqli->query($sql);
     }
 
