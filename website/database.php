@@ -50,16 +50,64 @@ class kapcsolat{
     }
 
     public function saveLink($code, $link){
+        $sql="UPDATE links SET link='".$link."' WHERE code='".$code."'";
+        $this->mysqli->query($sql);
+    }
+
+    public function isCodeExits($userID, $code){
+
         $checkSQL ="SELECT * FROM links WHERE code LIKE '".$code."'";
         $res = $this->mysqli->query($checkSQL);
         
         if($res->num_rows == 0){
-            $sql="INSERT INTO links (code, link) VALUES ('".$code."', '".$link."')";
-            $this->mysqli->query($sql);
+            return false;
         }
+
+        return true;
     }
 
-   
+    public function saveCard($card, $userID){
+        $code = $card[0];
+        $number = $card[1];
+        $edition = $card[2];
+        $char_name = $card[3];
+        $series = $card[4];
+        $quality = $card[5];
+        $frame = $card[6] == '' ? '0' : '1';
+        $wishlists = $card[7];
+        $effort = $card[8];
+
+        $sql='INSERT INTO links(
+            code, 
+            number, 
+            edition, 
+            char_name, 
+            series, 
+            quality, 
+            frame, 
+            wishlists, 
+            effort, 
+            link, 
+            userID) VALUES (
+                "'.$code.'",
+                '.$number.',
+                '.$edition.',
+                "'.$char_name.'",
+                "'.$series.'",
+                '.$quality.',
+                '.$frame.',
+                '.$wishlists.',
+                '.$effort.',
+                "",
+                '.$userID.')';
+        $this->mysqli->query($sql);
+    }
+
+    public function getEmptyLinks($userID){
+        $sql = "SELECT * FROM links WHERE userID LIKE ".$userID." AND link LIKE '' ";
+        $res = $this->mysqli->query($sql);
+        return $res;
+    }
 }
 
 ?>
