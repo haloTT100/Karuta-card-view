@@ -18,7 +18,28 @@ class kapcsolat{
         $this->pass='';
         $this->db='varazskartya';
 
-        $this->mysqli= new mysqli($this->host, $this->user, $this->pass, $this->db);
+        $this->mysqli= new mysqli($this->host, $this->user, $this->pass);
+
+        $initSQL = "CREATE DATABASE IF NOT EXISTS ".$this->db;
+        
+        $this->mysqli->query($initSQL);
+
+        mysqli_select_db($this->mysqli, $this->db);
+        $tableInit = "CREATE TABLE IF NOT EXISTS links (
+            code varchar(20) NOT NULL,
+            number int(11) NOT NULL,
+            edition int(11) NOT NULL,
+            char_name text NOT NULL,
+            series text NOT NULL,
+            quality int(11) NOT NULL,
+            frame tinyint(1) NOT NULL,
+            wishlists int(11) NOT NULL,
+            effort int(11) NOT NULL,
+            link varchar(255),
+            userID int(11)
+          ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+
+          $this->mysqli->query($tableInit);
         return $this->mysqli;
     }
 
