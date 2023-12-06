@@ -39,7 +39,7 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-logger = logging.getLogger("cardurr")
+logger = logging.getLogger("pankix")
 logger.setLevel(logging.DEBUG)
 logger.propagate = False  # Prevent logs from being passed to the handlers of higher level loggers
 
@@ -54,7 +54,7 @@ class bolondBot(discord.Client):
     def __init__(self):
         super().__init__()
         self.cshannel = None
-        self.messageLoader = None
+        self.messageLoader = int(channels['pankix'])
         self.karuta_bot = None
         self.tempcard = None
         self.data = []
@@ -63,7 +63,7 @@ class bolondBot(discord.Client):
         ch.setFormatter(CustomFormatter(self.user.name))
         logger.addHandler(ch)
         self.channel = self.get_channel(1181224154511462413)
-        self.messageLoader = self.get_channel(1181330761270444143)
+        self.messageLoader = self.get_channel(self.messageLoader)
         self.karuta_bot = await self.fetch_user(646937666251915264)
 
     async def on_message(self, message):
@@ -113,6 +113,5 @@ class bolondBot(discord.Client):
             async with session.post('http://127.0.0.1/saveLink.php', data=data) as resp:
                 logger.info(resp.status)
 
-
 client = bolondBot()
-client.run(tokens['carddurr'])
+client.run(tokens['pankix'])
