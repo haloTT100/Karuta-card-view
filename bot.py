@@ -54,7 +54,7 @@ class bolondBot(discord.Client):
     def __init__(self):
         super().__init__()
         self.cshannel = None
-        self.messageLoader = None
+        self.messageLoader = int(channels['carddurr'])
         self.karuta_bot = None
         self.tempcard = None
         self.data = []
@@ -63,10 +63,13 @@ class bolondBot(discord.Client):
         ch.setFormatter(CustomFormatter(self.user.name))
         logger.addHandler(ch)
         self.channel = self.get_channel(1181224154511462413)
-        self.messageLoader = self.get_channel(1181330761270444143)
+        self.messageLoader = self.get_channel(self.messageLoader)
         self.karuta_bot = await self.fetch_user(646937666251915264)
 
     async def on_message(self, message):
+        if message.channel == self.channel and message.author.id == 320948474868924416 and message.content == 'stop':
+            await self.close()
+
         if message.channel == self.channel and message.author.name == 'Bolond' and message.content == 'Embeds sent!':
             messages = [msg async for msg in self.messageLoader.history(limit=1000)]
             await self.messageLoader.purge(limit=1000)
@@ -112,7 +115,6 @@ class bolondBot(discord.Client):
                     "code": code}  # replace with your actual data
             async with session.post('http://127.0.0.1/saveLink.php', data=data) as resp:
                 logger.info(resp.status)
-
 
 client = bolondBot()
 client.run(tokens['carddurr'])

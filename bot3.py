@@ -39,7 +39,7 @@ class CustomFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-logger = logging.getLogger("pankix")
+logger = logging.getLogger("lakatos")
 logger.setLevel(logging.DEBUG)
 logger.propagate = False  # Prevent logs from being passed to the handlers of higher level loggers
 
@@ -54,7 +54,7 @@ class bolondBot(discord.Client):
     def __init__(self):
         super().__init__()
         self.cshannel = None
-        self.messageLoader = int(channels['pankix'])
+        self.messageLoader = int(channels['lakatos'])
         self.karuta_bot = None
         self.tempcard = None
         self.data = []
@@ -117,4 +117,4 @@ class bolondBot(discord.Client):
                 logger.info(resp.status)
 
 client = bolondBot()
-client.run(tokens['pankix'])
+client.run(tokens['lakatos'])
