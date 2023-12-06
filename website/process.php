@@ -15,40 +15,64 @@ if(isset($_POST['upload'])){
     //CSOMAGOLÁS
     $packs = getPacks($hooks);
     
-    for($i=1; $i < ceil(count($packs)/2)+1;$i++){
-        for($l=1; $l < count($hooks);$l++){
-            if($i*$l <= count($packs))
-            sendToDiscord($packs[$i*$l], $hooks[$l]);
+    $botCounter = 0;
+    foreach($packs as $p){
+        if($botCounter > count($hooks)-1){
+            $botCounter = 0;
         }
+        print("<p>".$p."</p>");
+        print("<p>".$hooks[$botCounter]."</p>");
+        $botCounter++;
     }
-    sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
+    
+    //sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
 }
 
 function getPacks($hooks){
    
-    $packs = array();
+    $botPacks = array();
 
     $conn = new kapcsolat();
     $cards = $conn->getEmptyLinks(0);
-    $cardsCount = $cards->num_rows;
-    $hookCount = count($hooks);
-    $packcount = ceil(($cardsCount/100)/$hookCount);
-    
-    $cardsArray = array();
+
+    $codeArray = array();
     foreach($cards as $card){
-        array_push($cardsArray, $card['code']);
+        array_push($codeArray, $card['code']);
     }
 
-    for($i=1; $i < $packcount+1;$i++){
-        $pack = "";
-        for($l=1; $l < 101;$l++){
-            if($i*$l <= count($cardsArray))
-            $pack = $pack . $cardsArray[$i*$l] . ";";
-            
-        }
-        $pack = substr($pack, 0, -1);
-        array_push($packs, $pack);
+    
+    $cardsCount = $cards->num_rows;
+    $hookCount = count($hooks);
+
+    $packs = array();
+    $counter = 0;
+    $packCounter = 0;
+    $pack = "";
+
+    $packSize = 100;
+    if($packSize > $cardsCount){
+        $packSize = $cardsCount/2;
     }
+
+    foreach($codeArray as $code){
+        
+        if($counter >= $packSize-1){
+            $pack = $pack . $code . ";";
+            $counter=0;
+            $pack = substr($pack, 0, -1);
+            array_push($packs, $pack);
+            $pack = "";
+        }else{
+            $counter++;
+            $pack = $pack . $code . ";";
+        }
+        
+    }
+    $pack = substr($pack, 0, -1);
+    array_push($packs, $pack);
+    
+
+    
     return $packs;
 }
 

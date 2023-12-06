@@ -77,6 +77,12 @@ class kapcsolat{
         $wishlists = $card[7];
         $effort = $card[8];
 
+        $char_name = str_replace('"', '""', $char_name);
+        $series = str_replace('"', '""', $series);
+        
+        $char_name = str_replace("'", "''", $char_name);
+        $series = str_replace("'", "''", $series);
+        
         $sql='INSERT INTO links(
             code, 
             number, 
@@ -100,6 +106,7 @@ class kapcsolat{
                 '.$effort.',
                 "",
                 '.$userID.')';
+
                 print($sql);
         $this->mysqli->query($sql);
     }
