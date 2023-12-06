@@ -20,12 +20,11 @@ if(isset($_POST['upload'])){
         if($botCounter > count($hooks)-1){
             $botCounter = 0;
         }
-        print("<p>".$p."</p>");
-        print("<p>".$hooks[$botCounter]."</p>");
+        sendToDiscord($p, $hooks[$botCounter]);
         $botCounter++;
     }
     
-    //sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
+    sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
 }
 
 function getPacks($hooks){
