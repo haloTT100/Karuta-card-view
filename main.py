@@ -1,10 +1,7 @@
-from bot import bolondBot
-import json
+import subprocess
 
-with open('trianon.json', 'r', encoding='utf8') as f:
-    config = json.load(f)
+carddurr = subprocess.Popen(['python', 'bot.py'])
+pankix = subprocess.Popen(['python', 'bot2.py'])
 
-TOKEN = config['token']
-
-carddurr = bolondBot()
-carddurr.run(TOKEN)
+carddurr.wait()
+pankix.wait()
