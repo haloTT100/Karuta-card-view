@@ -4,6 +4,7 @@ import asyncio
 import logging
 import aiohttp
 import json
+import math
 
 #load vars
 with open('trianon.json', 'r', encoding='utf8') as f:
@@ -42,21 +43,23 @@ class bolondBot(discord.Client):
 
         if message.channel == self.channel and message.author.name == 'Bolond' and message.content == 'Embeds sent!':
             messages = [msg async for msg in self.messageLoader.history(limit=1000)]
-            await self.messageLoader.purge(limit=1000)
-            for msg in messages:
-                if msg.embeds:
-                    embed = msg.embeds[0]
-                    try:
-                        self.data.extend(embed.description.split(';'))
-                    except Exception:
-                        logger.error(f"Failed to parse embed: {embed.description}")
-                        return
-                    
-            messages = []
-            logger.info(f"{self.data}")
-            await self.channel.send(f"Loaded {len(self.data)} codes.")
+            if messages:
+                await self.messageLoader.purge(limit=1000)
+                for msg in messages:
+                    if msg.embeds:
+                        embed = msg.embeds[0]
+                        try:
+                            self.data.extend(embed.description.split(';'))
+                        except Exception:
+                            logger.error(f"Failed to parse embed: {embed.description}")
+                            return
+                        
+                messages = []
+                logger.info(f"{self.data}")
+                await self.channel.send(f"Loaded {len(self.data)} codes.")
 
         if message.author.name == self.user.name and f"Loaded {len(self.data)} codes." in message.content:
+            await self.calculateCardLoadTime(len(self.data))
             await self.getCard(self.data)
             
         if message.author == self.karuta_bot and message.embeds:
@@ -85,6 +88,13 @@ class bolondBot(discord.Client):
                     "code": code}  # replace with your actual data
             async with session.post('http://127.0.0.1/saveLink.php', data=data) as resp:
                 logger.info(resp.status)
+
+    async def calculateCardLoadTime(self, cards):
+        total_secs = cards * 10
+        hours = total_secs // 3600
+        mins = (total_secs % 3600) // 60
+        secs = total_secs % 60
+        await self.channel.send(f"Estimated card load time: {hours} hours, {mins} minutes and {secs} seconds")
 
 client = bolondBot()
 client.run(tokens['carddurr'])
