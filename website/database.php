@@ -116,6 +116,12 @@ class kapcsolat{
         $res = $this->mysqli->query($sql);
         return $res;
     }
+
+    public function getAllCardsByUserID($userID){
+        $sql = "SELECT * FROM links WHERE userID LIKE ".$userID;
+        $res = $this->mysqli->query($sql);
+        return $res;
+    }
 }
 
 ?>

@@ -9,7 +9,7 @@ $hooks = array("https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6
 
 if(isset($_POST['upload'])){
     $data = readCSV();
-    
+    //removeBurnedCards($data);
     $data = removeExitsCodes($data);
     saveCards($data);
     //debugData($data);
@@ -27,6 +27,23 @@ if(isset($_POST['upload'])){
     }
     
     sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
+}
+
+function removeBurnedCards($data){
+    $conn = new kapcsolat();
+    $oldData = $conn->getAllCardsByUserID(0);
+    $codes = array();
+    foreach($oldData as $d){
+        array_push($codes, $d["code"]);
+    }
+    $codesTemp = $codes;
+    foreach($codesTemp as $c){
+        foreach($data as $d){
+            if($d[0] == $c) unset($c);
+        }
+    }
+
+    debugData($codes);
 }
 
 function getPacks($hooks){
