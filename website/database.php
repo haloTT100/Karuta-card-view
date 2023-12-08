@@ -40,6 +40,16 @@ class kapcsolat{
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
           $this->mysqli->query($tableInit);
+
+          $usersTableInit = "CREATE TABLE IF NOT EXISTS users (
+            id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            username varchar(50) NOT NULL,
+            password varchar(255) NOT NULL,
+            email varchar(255) NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+
+        $this->mysqli->query($usersTableInit);
+
         return $this->mysqli;
     }
 
@@ -121,6 +131,57 @@ class kapcsolat{
         $sql = "SELECT * FROM links WHERE userID LIKE ".$userID;
         $res = $this->mysqli->query($sql);
         return $res;
+    }
+
+    public function registerUser($username, $password, $passwordConfirm, $email) {
+        // Check if email already exists
+        $emailExistsQuery = "SELECT * FROM users WHERE email = '$email'";
+        $result = $this->mysqli->query($emailExistsQuery);
+
+        if ($result && $result->num_rows > 0) {
+            return "Email address already exists";
+        }
+
+        // Check if passwords match
+        if ($password !== $passwordConfirm) {
+            return "Passwords do not match";
+        }
+
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Insert user data into the database
+        $insertUserQuery = "INSERT INTO users (username, password, email) VALUES ('$username', '$hashedPassword', '$email')";
+        $insertResult = $this->mysqli->query($insertUserQuery);
+
+        if ($insertResult) {
+            return "Registration successful";
+        } else {
+            return "Registration failed";
+        }
+    }
+
+    public function loginUser($email, $password) {
+        // Retrieve hashed password for the provided email
+        $getUserQuery = "SELECT * FROM users WHERE email = '$email'";
+        $result = $this->mysqli->query($getUserQuery);
+
+        if ($result && $result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            $hashedPassword = $user['password'];
+
+            // Verify the provided password
+            if (password_verify($password, $hashedPassword)) {
+                session_start();
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['email'] = $user['email'];
+                return "Login successful";
+            } else {
+                return "Invalid password";
+            }
+        } else {
+            return "User not found";
+        }
     }
 }
 
