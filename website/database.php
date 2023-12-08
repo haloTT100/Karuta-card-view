@@ -54,7 +54,9 @@ class kapcsolat{
     }
 
     public function getLinks(){
-        $sql = "SELECT * FROM links";
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $userID = $this->getUserIdByEmail($_SESSION['email']);
+        $sql = "SELECT * FROM links WHERE userID LIKE ".$userID;
         $res = $this->mysqli->query($sql);
         return $res;
     }
