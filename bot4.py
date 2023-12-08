@@ -4,7 +4,6 @@ import asyncio
 import logging
 import aiohttp
 import json
-import math
 
 #load vars
 with open('trianon.json', 'r', encoding='utf8') as f:
@@ -13,7 +12,7 @@ with open('fájdalom.json', 'r', encoding='utf8') as f:
     channels = json.load(f)
 
 #setup logger
-logger = logging.getLogger("cardurr")
+logger = logging.getLogger("kamaboko")
 logger.setLevel(logging.DEBUG)
 logger.propagate = False
 for handler in logger.handlers[:]:
@@ -25,7 +24,7 @@ class bolondBot(discord.Client):
     def __init__(self):
         super().__init__()
         self.cshannel = None
-        self.messageLoader = int(channels['carddurr'])
+        self.messageLoader = int(channels['kamaboko'])
         self.karuta_bot = None
         self.tempcard = None
         self.data = []
@@ -43,6 +42,7 @@ class bolondBot(discord.Client):
 
         if message.channel == self.channel and message.author.name == 'Bolond' and message.content == 'Embeds sent!':
             messages = [msg async for msg in self.messageLoader.history(limit=1000)]
+            await self.messageLoader.purge(limit=1000)
             if messages:
                 await self.messageLoader.purge(limit=1000)
                 for msg in messages:
@@ -97,4 +97,4 @@ class bolondBot(discord.Client):
         await self.channel.send(f"Estimated card load time: {hours} hours, {mins} minutes and {secs} seconds")
 
 client = bolondBot()
-client.run(tokens['carddurr'])
+client.run(tokens['kamaboko'])

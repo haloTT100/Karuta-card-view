@@ -1,5 +1,9 @@
 body{
     background-color: rgb(29, 29, 29);
+    
+}
+*{
+  color: white;
 }
 
 .card{
@@ -22,12 +26,15 @@ body{
   animation-iteration-count: 1;
 }
 
-.cards div:hover .c{
-
-
-
+.form-container {
+  max-width: 200px;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 
+.form-label {
+  color: #ffffff;
+}
 
 
 /* ----------------------------------------------
