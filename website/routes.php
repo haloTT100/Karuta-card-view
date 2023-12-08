@@ -12,8 +12,13 @@ require_once __DIR__.'/router.php';
 get('/', 'views/index.php');
 get('/upload', 'views/upload.php');
 get('/process', 'views/process.php');
+post('/process', 'views/process.php');
+get('/logout', 'views/logout.php');
 get('/login', 'views/login.php');
+post('/login', 'views/login.php');
+
 get('/register', 'views/reg.php');
+post('/register', 'views/reg.php');
 
 // Dynamic GET. Example with 1 variable
 // The $id will be available in user.php

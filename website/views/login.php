@@ -12,7 +12,23 @@
 <main class="container p-4">
   <div class="form-container">
     <h2 class="mb-4 text-center">Login</h2>
-    <form id="registrationForm">
+    <?php
+include "database.php";
+
+if(isset($_POST['logForm'])){
+    $conn = new kapcsolat();
+    $res = $conn->loginUser($_REQUEST['email'], $_REQUEST['password']);
+    if($res == "Login successful!")
+        echo '<p class="alert alert-success">';
+    else
+        echo '<p class="alert alert-danger">';
+
+    echo $res;
+    echo '</p>';
+}
+
+?>
+    <form id="registrationForm" method="POST">
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control" id="email" name="email" required>
@@ -21,7 +37,8 @@
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" name="password" required>
       </div>
-      <button type="submit" class="btn btn-light">Login</button>
+      <div class="mb-3"><a href="/register">New here? Create an account!</a></div>
+      <button type="submit" class="btn btn-light" name="logForm">Login</button>
     </form>
   </div>
 </main>

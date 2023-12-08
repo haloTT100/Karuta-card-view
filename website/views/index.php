@@ -1,5 +1,6 @@
 <!doctype html>
 <?php
+session_start();
 if(!isset($_SESSION['username'])) header('Location: /login');
 
 ?>
@@ -12,7 +13,9 @@ if(!isset($_SESSION['username'])) header('Location: /login');
     <title>ne néz ide</title>
   </head>
   <body>
-
+    <div class="text-center">
+      <a class="btn btn-danger m-3" href="/logout">Logout</a>
+    </div>
     <div class="cards row text-center m-0 p-0">
         <?php
         include "database.php";

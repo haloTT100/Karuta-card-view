@@ -13,6 +13,22 @@
   <div class="form-container">
     <h2 class="mb-4 text-center">Registration</h2>
     <form id="registrationForm" method="POST">
+    <?php
+include "database.php";
+
+if(isset($_POST['regForm'])){
+    $conn = new kapcsolat();
+    $res = $conn->registerUser($_REQUEST['username'], $_REQUEST['password1'], $_REQUEST['password2'], $_REQUEST['email']);
+    if($res == "Registration successful!")
+        echo '<p class="alert alert-success">';
+    else
+        echo '<p class="alert alert-danger">';
+
+    echo $res;
+    echo '</p>';
+}
+
+?>
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input type="text" class="form-control" id="username" name="username" required>
@@ -29,6 +45,7 @@
         <label for="password2" class="form-label">Confirm Password</label>
         <input type="password" class="form-control" id="password2" name="password2" required>
       </div>
+      <div class="mb-3"><a href="/login">Have an account? Sign in here!</a></div>
       <input type="submit" id="regForm" name="regForm" class="btn btn-light">
     </form>
   </div>
@@ -68,12 +85,3 @@
 </body>
 </html>
 
-<?php
-include "database.php";
-
-if(isset($_POST['regForm'])){
-    $conn = new kapcsolat();
-    $conn->registerUser($_REQUEST['username'], $_REQUEST['password1'], $_REQUEST['password2'], $_REQUEST['email']);
-}
-
-?>

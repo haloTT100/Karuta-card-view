@@ -64,7 +64,7 @@ class kapcsolat{
         $this->mysqli->query($sql);
     }
 
-    public function isCodeExits($userID, $code){
+    public function isCodeExits($code){
 
         $checkSQL ="SELECT * FROM links WHERE code LIKE '".$code."'";
         $res = $this->mysqli->query($checkSQL);
@@ -76,7 +76,10 @@ class kapcsolat{
         return true;
     }
 
-    public function saveCard($card, $userID){
+    public function saveCard($card){
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $userID = $this->getUserIdByEmail($_SESSION['email']);
+
         $code = $card[0];
         $number = $card[1];
         $edition = $card[2];
@@ -121,15 +124,23 @@ class kapcsolat{
         $this->mysqli->query($sql);
     }
 
-    public function getEmptyLinks($userID){
+    public function getEmptyLinks(){
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $userID = $this->getUserIdByEmail($_SESSION['email']);
+
         $sql = "SELECT * FROM links WHERE userID LIKE ".$userID." AND link LIKE '' ";
         $res = $this->mysqli->query($sql);
+
         return $res;
     }
 
-    public function getAllCardsByUserID($userID){
+    public function getAllCardsByUserID(){
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $userID = $this->getUserIdByEmail($_SESSION['email']);
+
         $sql = "SELECT * FROM links WHERE userID LIKE ".$userID;
         $res = $this->mysqli->query($sql);
+
         return $res;
     }
 
@@ -155,7 +166,7 @@ class kapcsolat{
         $insertResult = $this->mysqli->query($insertUserQuery);
 
         if ($insertResult) {
-            return "Registration successful";
+            return "Registration successful!";
         } else {
             return "Registration failed";
         }
@@ -172,15 +183,29 @@ class kapcsolat{
 
             // Verify the provided password
             if (password_verify($password, $hashedPassword)) {
-                session_start();
+                if (session_status() === PHP_SESSION_NONE) session_start();
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['email'] = $user['email'];
-                return "Login successful";
+                return "Login successful!";
             } else {
                 return "Invalid password";
             }
         } else {
             return "User not found";
+        }
+    }
+
+    public function getUserIdByEmail($email) {
+        $email = $this->mysqli->real_escape_string($email);
+
+        $query = "SELECT id FROM users WHERE email = '$email'";
+        $result = $this->mysqli->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            return $user['id'];
+        } else {
+            return null; // Ha nincs találat
         }
     }
 }

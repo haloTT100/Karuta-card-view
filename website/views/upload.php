@@ -10,7 +10,7 @@
   </head>
   <body>
     <div class="p-3 mb-3">
-        <form action="./process.php" method="POST" enctype="multipart/form-data">
+        <form action="./process" method="POST" enctype="multipart/form-data">
         <input class="form-control" type="file" name="file" id="file" accept=".csv">
         <input class="form-control" type="submit" name="upload" value="Upload">
     </form>
