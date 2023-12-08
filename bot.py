@@ -4,7 +4,6 @@ import asyncio
 import logging
 import aiohttp
 import json
-import math
 
 #load vars
 with open('trianon.json', 'r', encoding='utf8') as f:
@@ -86,7 +85,7 @@ class bolondBot(discord.Client):
         async with aiohttp.ClientSession() as session:
             data = {"link": url,
                     "code": code}  # replace with your actual data
-            async with session.post('http://127.0.0.1/saveLink.php', data=data) as resp:
+            async with session.post('http://127.0.0.1/saveLink', data=data) as resp:
                 logger.info(resp.status)
 
     async def calculateCardLoadTime(self, cards):
@@ -94,7 +93,11 @@ class bolondBot(discord.Client):
         hours = total_secs // 3600
         mins = (total_secs % 3600) // 60
         secs = total_secs % 60
-        await self.channel.send(f"Estimated card load time: {hours} hours, {mins} minutes and {secs} seconds")
+        await self.channel.send(f'''
+                                # ----------------------------------------------------------------------------------------------------------------------------
+                                # Estimated card load time: {hours} hours, {mins} minutes and {secs} seconds
+                                # ----------------------------------------------------------------------------------------------------------------------------
+                                ''')
 
 client = bolondBot()
 client.run(tokens['carddurr'])
