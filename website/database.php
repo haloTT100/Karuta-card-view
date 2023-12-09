@@ -66,6 +66,11 @@ class kapcsolat{
         $this->mysqli->query($sql);
     }
 
+    public function deleteLink($code){
+        $sql="DELETE FROM links WHERE code='".$code."'";
+        $this->mysqli->query($sql);
+    }
+
     public function isCodeExits($code){
 
         $checkSQL ="SELECT * FROM links WHERE code LIKE '".$code."'";

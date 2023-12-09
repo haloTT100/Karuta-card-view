@@ -1,6 +1,11 @@
 <?php
-include "database.php";
 
+session_start();
+if(!isset($_SESSION['username'])) header('Location: /login');
+
+
+include "database.php";
+ini_set('max_execution_time', '300');
 $hooks = array("https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6VKftE2Oi4jWIVhadaLoKu7Ca2OjXhM1pIMQGdklXDjWYedrSwmpdXt_tH", //message-loader
 "https://discord.com/api/webhooks/1181694812336959518/PrPadO8RrfVsss2f-7Cz-teskMLJaR3SlBvI-yVadNIO8gjXrVaz5GQTgvk2h-W4Lshn",                //message-loader2
 "https://discord.com/api/webhooks/1181968319092359248/qa2qe1ujJ0Wj1LRcZa8GUi6u_jCSBz3QfpCnbnVQn1gdvrLnba6yvLpTopLMSxSZJdLi",                //message-loader3
@@ -9,7 +14,7 @@ $hooks = array("https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6
 
 if(isset($_POST['upload'])){
     $data = readCSV();
-    //removeBurnedCards($data);
+    removeBurnedCards($data);
     $data = removeExitsCodes($data);
     saveCards($data);
     //debugData($data);
@@ -18,16 +23,21 @@ if(isset($_POST['upload'])){
     $packs = getPacks($hooks);
     
     $botCounter = 0;
+    $packCounter= 0;
+
     foreach($packs as $p){
+        $packCounter++;
         if($botCounter > count($hooks)-1){
             $botCounter = 0;
         }
         //sendToDiscord($p, $hooks[$botCounter]);
+        //echo $p;
+        sleep(1); //Ez csak debug ki kell szedni prodba
+        echo '<script>draw('.((count($packs)/$packCounter)*100).');</script>';
         $botCounter++;
     }
-    
     //sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
-    header('Location: /');
+    header('Location: /?uploadSuccess');
 }
 
 function removeBurnedCards($data){
@@ -37,14 +47,18 @@ function removeBurnedCards($data){
     foreach($oldData as $d){
         array_push($codes, $d["code"]);
     }
-    $codesTemp = $codes;
-    foreach($codesTemp as $c){
+
+
+    for($i = 0; $i < count($codes); $i++){
         foreach($data as $d){
-            if($d[0] == $c) unset($c);
+            if($d[0] == $codes[$i]) $codes[$i] = "";
         }
     }
 
-    debugData($codes);
+    foreach($codes as $c){
+        $conn->deleteLink($c);
+    }
+
 }
 
 function getPacks($hooks){
@@ -125,7 +139,7 @@ function removeExitsCodes($data){
             $data[$i][5], //quality 5
             $data[$i][11], //frame 6
             $data[$i][16], //wishlists 7
-            $data[$i][22], //effort 8
+            $data[$i][22] //effort 8
         );
             array_push($newData, $newCard);
         }
@@ -168,7 +182,7 @@ function readCSV(){
 }
 
 function sendToDiscord($msg, $webhook){
-    $url = $webhook;
+    //$url = $webhook;
     $headers = ['Content-Type: application/json; charset=utf-8'];
     $embed = [
         'description' => $msg
@@ -207,3 +221,4 @@ function sendToDiscordEndMessage($msg, $webhook){
 }
 
 ?>
+
