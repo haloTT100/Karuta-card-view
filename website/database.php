@@ -62,7 +62,7 @@ class kapcsolat{
     }
 
     public function saveLink($code, $link, $quality){
-        $sql="UPDATE links SET link='".$link."' quality='".$quality."' WHERE code='".$code."'";
+        $sql="UPDATE links SET link='".$link."' quality=".$quality." WHERE code='".$code."'";
         $this->mysqli->query($sql);
     }
 
