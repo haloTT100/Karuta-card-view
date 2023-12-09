@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+if(!isset($_SESSION['username'])) header('Location: /login');
+
+
 include "database.php";
 ini_set('max_execution_time', '300');
 $hooks = array("https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6VKftE2Oi4jWIVhadaLoKu7Ca2OjXhM1pIMQGdklXDjWYedrSwmpdXt_tH", //message-loader

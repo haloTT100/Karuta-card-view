@@ -1,4 +1,9 @@
 <!doctype html>
+<?php
+session_start();
+if(!isset($_SESSION['username'])) header('Location: /login');
+
+?>
 <html lang="hu">
   <head>
     <meta charset="utf-8">
