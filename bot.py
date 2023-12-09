@@ -123,7 +123,7 @@ async def getEmptyLinks():
                 async with session.get('http://127.0.0.1/getEmptyLinks', data=data) as resp:
                     respText = await resp.text()
                     if respText:
-                        if respText != 'okés':
+                        if respText != 'Okés':
                             logger.error(respText)
         else:
             logger.warning("Not checking for empty links because there are still cards to load!")
