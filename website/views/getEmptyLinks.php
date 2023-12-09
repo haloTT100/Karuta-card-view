@@ -20,9 +20,9 @@ if(isset($_POST['b'])){
 
 
     sendToDiscord($pack, $hooks[$botNum-1]);
-
+    sleep(1);
     sendToDiscordEndMessage('Embeds sent! Bot:'.$botNum.'', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
-
+    print("Okés");
 }
 
 function getPack($hooks){
