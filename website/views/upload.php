@@ -19,13 +19,13 @@ if(!isset($_SESSION['username'])) header('Location: /login');
       <form action="./process" method="POST" enctype="multipart/form-data">
           <input class="form-control mb-3" type="file" name="file" id="file" accept=".csv">
           <input onclick="msg();" class="form-control mb-3" type="submit" name="upload" value="Upload">
-          
       </form>
+      <div id='msgID'></div>
     </div>
     <script>
       function msg(){
         var msgElement = document.getElementById("msgID");
-        msgElement.innerHTML = "<p id='msgID' class='alert alert-primary'>Uploading...</p>";
+        msgElement.innerHTML = "<p class='alert alert-primary'>Uploading...</p>";
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

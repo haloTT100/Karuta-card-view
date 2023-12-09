@@ -30,10 +30,10 @@ if(isset($_POST['upload'])){
         if($botCounter > count($hooks)-1){
             $botCounter = 0;
         }
-        sendToDiscord($p, $hooks[$botCounter]);
+       // sendToDiscord($p, $hooks[$botCounter]);
         $botCounter++;
     }
-    sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
+    //sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
     header('Location: /?uploadSuccess');
 }
 
@@ -125,7 +125,7 @@ function removeExitsCodes($data){
     $newData = array();
     $conn = new kapcsolat();
     for($i = 1; $i < count($data); $i++){
-        if(!$conn->isCodeExits($data[$i][0]) && $data[$i][0] !== ''){
+        if(!$conn->isCodeExits($data[$i][0], $data[$i][5]) && $data[$i][0] !== ''){
             $newCard = array();
             array_push($newCard, 
             $data[$i][0], //code 0 

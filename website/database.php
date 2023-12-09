@@ -71,13 +71,16 @@ class kapcsolat{
         $this->mysqli->query($sql);
     }
 
-    public function isCodeExits($code){
+    public function isCodeExits($code, $quality){
 
         $checkSQL ="SELECT * FROM links WHERE code LIKE '".$code."'";
         $res = $this->mysqli->query($checkSQL);
         
         if($res->num_rows == 0){
             return false;
+        }else{
+            $sqlUpdate ="UPDATE links SET quality='".$quality."' WHERE code='".$code."'";
+            $res = $this->mysqli->query($sqlUpdate);
         }
 
         return true;
