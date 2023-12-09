@@ -14,6 +14,7 @@
   </head>
   <body>
     <div class="text-center">
+      <a class="btn btn-light m-3" href="/upload">Upload</a>
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
     </div>
     <?php

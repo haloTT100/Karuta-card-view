@@ -15,17 +15,17 @@ if(!isset($_SESSION['username'])) header('Location: /login');
     <title>ne néz ide</title>
   </head>
   <body>
-    <div class="p-3 mb-3">
+    <div class="p-3 mb-3 form-container-big">
       <form action="./process" method="POST" enctype="multipart/form-data">
-          <input class="form-control" type="file" name="file" id="file" accept=".csv">
-          <input onclick="msg();" class="form-control" type="submit" name="upload" value="Upload">
-          <p id="msgID" class="alert alert-primary"></p>
+          <input class="form-control mb-3" type="file" name="file" id="file" accept=".csv">
+          <input onclick="msg();" class="form-control mb-3" type="submit" name="upload" value="Upload">
+          
       </form>
     </div>
     <script>
       function msg(){
         var msgElement = document.getElementById("msgID");
-        msgElement.innerHTML = "Uploading...";
+        msgElement.innerHTML = "<p id='msgID' class='alert alert-primary'>Uploading...</p>";
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

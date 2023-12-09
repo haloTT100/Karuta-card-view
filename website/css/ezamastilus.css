@@ -32,6 +32,12 @@ body{
   margin-top: 50px;
 }
 
+.form-container-big {
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
 .form-label {
   color: #ffffff;
 }
