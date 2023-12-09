@@ -1,15 +1,15 @@
 <?php
 
-session_start();
-if(!isset($_SESSION['username'])) header('Location: /login');
+    session_start();
+    if(!isset($_SESSION['username'])) header('Location: /login');
 
 
 include "database.php";
 ini_set('max_execution_time', '300');
-$hooks = array("https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6VKftE2Oi4jWIVhadaLoKu7Ca2OjXhM1pIMQGdklXDjWYedrSwmpdXt_tH", //message-loader
-"https://discord.com/api/webhooks/1181694812336959518/PrPadO8RrfVsss2f-7Cz-teskMLJaR3SlBvI-yVadNIO8gjXrVaz5GQTgvk2h-W4Lshn",                //message-loader2
-"https://discord.com/api/webhooks/1181968319092359248/qa2qe1ujJ0Wj1LRcZa8GUi6u_jCSBz3QfpCnbnVQn1gdvrLnba6yvLpTopLMSxSZJdLi",                //message-loader3
-"https://discord.com/api/webhooks/1181968367612084305/TiMVL2UXFB4LC9Fv-oUgOkB8SSeBulrJAtVs2KlvyLzbH3EjkxP-n5CIcIyJqET7poM5");               //message-loader4
+$hooks = array("https://discord.com/api/webhooks/1181330916736520253/M5_1FyabUf6VKftE2Oi4jWIVhadaLoKu7Ca2OjXhM1pIMQGdklXDjWYedrSwmpdXt_tH",                 //message-loader
+                "https://discord.com/api/webhooks/1181694812336959518/PrPadO8RrfVsss2f-7Cz-teskMLJaR3SlBvI-yVadNIO8gjXrVaz5GQTgvk2h-W4Lshn",                //message-loader2
+                "https://discord.com/api/webhooks/1181968319092359248/qa2qe1ujJ0Wj1LRcZa8GUi6u_jCSBz3QfpCnbnVQn1gdvrLnba6yvLpTopLMSxSZJdLi",                //message-loader3
+                "https://discord.com/api/webhooks/1181968367612084305/TiMVL2UXFB4LC9Fv-oUgOkB8SSeBulrJAtVs2KlvyLzbH3EjkxP-n5CIcIyJqET7poM5");               //message-loader4
 
 
 if(isset($_POST['upload'])){
@@ -30,13 +30,10 @@ if(isset($_POST['upload'])){
         if($botCounter > count($hooks)-1){
             $botCounter = 0;
         }
-        //sendToDiscord($p, $hooks[$botCounter]);
-        //echo $p;
-        sleep(1); //Ez csak debug ki kell szedni prodba
-        echo '<script>draw('.((count($packs)/$packCounter)*100).');</script>';
+        sendToDiscord($p, $hooks[$botCounter]);
         $botCounter++;
     }
-    //sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
+    sendToDiscordEndMessage('Embeds sent!', "https://discord.com/api/webhooks/1181230412735979623/RPbzoIoglGEwJ-n73iV0sTQjlgJFAY5YlOGfjmkcE5liU7QE9YM3eO7I5AhSopDhgkbT");
     header('Location: /?uploadSuccess');
 }
 
@@ -182,7 +179,7 @@ function readCSV(){
 }
 
 function sendToDiscord($msg, $webhook){
-    //$url = $webhook;
+    $url = $webhook;
     $headers = ['Content-Type: application/json; charset=utf-8'];
     $embed = [
         'description' => $msg

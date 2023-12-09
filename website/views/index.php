@@ -1,8 +1,7 @@
 <!doctype html>
 <?php
-session_start();
-if(!isset($_SESSION['username'])) header('Location: /login');
-
+  session_start();
+  if(!isset($_SESSION['username'])) header('Location: /login');
 ?>
 <html lang="hu">
   <head>
@@ -18,7 +17,13 @@ if(!isset($_SESSION['username'])) header('Location: /login');
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
     </div>
     <?php
-      
+      if(isset($GET['uploadSuccess'])){
+        echo '<p class="alert alert-success">';
+        echo 'Upload successful!';
+        echo '</p>';
+        sleep(2);
+        header('Location: /');
+      }
     ?>
     <div class="cards row text-center m-0 p-0">
         <?php

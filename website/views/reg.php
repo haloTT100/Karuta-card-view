@@ -22,6 +22,8 @@ if(isset($_POST['regForm'])){
     $res = $conn->registerUser($_REQUEST['username'], $_REQUEST['password1'], $_REQUEST['password2'], $_REQUEST['email']);
     if($res == "Registration successful!")
         echo '<p class="alert alert-success">';
+      sleep(2);
+      header('Location: /login');
     else
         echo '<p class="alert alert-danger">';
 

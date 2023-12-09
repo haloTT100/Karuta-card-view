@@ -26,6 +26,8 @@ if(isset($_POST['logForm'])){
 
     echo $res;
     echo '</p>';
+    sleep(2);
+    header('Location: /');
 }
 
 ?>

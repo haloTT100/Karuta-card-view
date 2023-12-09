@@ -16,11 +16,11 @@ if(!isset($_SESSION['username'])) header('Location: /login');
   </head>
   <body>
     <div class="p-3 mb-3">
-        <form action="./process" method="POST" enctype="multipart/form-data">
-        <input class="form-control" type="file" name="file" id="file" accept=".csv">
-        <input onclick="msg();" class="form-control" type="submit" name="upload" value="Upload">
-        <p id="msgID" class="alert alert-primary"></p>
-    </form>
+      <form action="./process" method="POST" enctype="multipart/form-data">
+          <input class="form-control" type="file" name="file" id="file" accept=".csv">
+          <input onclick="msg();" class="form-control" type="submit" name="upload" value="Upload">
+          <p id="msgID" class="alert alert-primary"></p>
+      </form>
     </div>
     <script>
       function msg(){
