@@ -13,10 +13,16 @@
     <div class="p-3 mb-3">
         <form action="./process" method="POST" enctype="multipart/form-data">
         <input class="form-control" type="file" name="file" id="file" accept=".csv">
-        <input class="form-control" type="submit" name="upload" value="Upload">
+        <input onclick="msg();" class="form-control" type="submit" name="upload" value="Upload">
+        <p id="msgID" class="alert alert-primary"></p>
     </form>
     </div>
-    
+    <script>
+      function msg(){
+        var msgElement = document.getElementById("msgID");
+        msgElement.innerHTML = "Uploading...";
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
