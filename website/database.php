@@ -136,7 +136,7 @@ class kapcsolat{
 
     public function getEmptyLinks(){
 
-        $sql = "SELECT * FROM links WHERE userID link LIKE '' LIMIT 100";
+        $sql = "SELECT * FROM links WHERE link LIKE '' LIMIT 100";
         $res = $this->mysqli->query($sql);
 
         return $res;
