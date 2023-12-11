@@ -135,10 +135,8 @@ class kapcsolat{
     }
 
     public function getEmptyLinks(){
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        $userID = $this->getUserIdByEmail($_SESSION['email']);
 
-        $sql = "SELECT * FROM links WHERE userID LIKE ".$userID." AND link LIKE '' LIMIT 100";
+        $sql = "SELECT * FROM links WHERE userID link LIKE '' LIMIT 100";
         $res = $this->mysqli->query($sql);
 
         return $res;
