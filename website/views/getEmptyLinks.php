@@ -29,9 +29,9 @@ function getPack(){
     $conn = new kapcsolat();
     $cards = $conn->getEmptyLinks();
 
-    $codeArray = array();
+    $codeArray = "";
     foreach($cards as $card){
-        array_push($codeArray, $card['code'].';');
+        $codeArray += $card['code'].';';
     }
 
     $codeArray = substr($codeArray, 0, -1);
