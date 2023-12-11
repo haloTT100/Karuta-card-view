@@ -27,18 +27,18 @@ function getPack(){
 
 
     $conn = new kapcsolat();
-    $pack = $conn->getEmptyLinks();
+    $cards = $conn->getEmptyLinks();
 
     $codeArray = array();
     foreach($cards as $card){
         array_push($codeArray, $card['code'].';');
     }
 
-    $pack = substr($pack, 0, -1);
+    $codeArray = substr($codeArray, 0, -1);
     
 
     
-    return $pack;
+    return $codeArray;
 }
 
 function sendToDiscord($msg, $webhook){
