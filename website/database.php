@@ -117,7 +117,7 @@ class kapcsolat{
             wishlists, 
             effort, 
             link, 
-            userID,botID) VALUES (
+            userID) VALUES (
                 "'.$code.'",
                 '.$number.',
                 '.$edition.',
