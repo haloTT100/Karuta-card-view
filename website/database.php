@@ -36,7 +36,8 @@ class kapcsolat{
             wishlists int(11) NOT NULL,
             effort int(11) NOT NULL,
             link varchar(255),
-            userID int(11)
+            userID int(11),
+            botID int(11)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
           $this->mysqli->query($tableInit);
@@ -117,7 +118,7 @@ class kapcsolat{
             wishlists, 
             effort, 
             link, 
-            userID) VALUES (
+            userID,botID) VALUES (
                 "'.$code.'",
                 '.$number.',
                 '.$edition.',
@@ -128,7 +129,7 @@ class kapcsolat{
                 '.$wishlists.',
                 '.$effort.',
                 "",
-                '.$userID.')';
+                '.$userID.',0)';
 
                 //print($sql);
         $this->mysqli->query($sql);
