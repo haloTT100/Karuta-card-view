@@ -137,8 +137,14 @@ class kapcsolat{
 
     public function getEmptyLinks(){
 
-        $sql = "UPDATE links SET link='Wait' WHERE link LIKE '' LIMIT 100";
-        $res = $this->mysqli->query($sql);
+        $sql1 = "SELECT * FROM links WHERE link LIKE '' LIMIT 100";
+        
+        $res = $this->mysqli->query($sql1);
+        foreach($res as $c){
+            $sql2 = "UPDATE links SET link='Wait' WHERE code LIKE '".$c['code']."'";
+            $this->mysqli->query($sql2);
+        }
+
 
         return $res;
     }
