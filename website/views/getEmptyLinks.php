@@ -31,7 +31,7 @@ function getPack(){
 
     $codeArray = "";
     foreach($cards as $card){
-        $codeArray += $card['code'].';';
+        $codeArray = $codeArray.$card['code'].';';
     }
 
     $codeArray = substr($codeArray, 0, -1);
