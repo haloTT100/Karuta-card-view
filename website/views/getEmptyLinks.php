@@ -23,7 +23,7 @@ if(isset($_POST['b'])){
     print("Okés");
 }
 
-function getPack($hooks){
+function getPack(){
 
 
     $conn = new kapcsolat();
