@@ -43,10 +43,10 @@ class bolondBot(discord.Client):
 
     async def on_message(self, message):
         if message.channel == self.channel and message.author.id == 320948474868924416 and message.content == 'stop':
-            await self.receiveEmptyLinks.cancel()
+            self.receiveEmptyLinks.cancel()
             await self.close()
 
-        if message.channel == self.channel and self.queuedCards == 0 and message.author.name == 'Bolond' and message.content == 'Embeds sent!':
+        if message.channel == self.channel and self.queuedCards == 0 and message.author.name == 'Bolond' and message.content == 'Embeds sent! Bot:1':
             messages = [msg async for msg in self.messageLoader.history(limit=1000)]
             if messages:
                 await self.messageLoader.purge(limit=1000)
@@ -63,12 +63,14 @@ class bolondBot(discord.Client):
                 logger.info(f"{self.data}")
                 self.queuedCards = len(self.data)
                 await self.channel.send(f"Loaded {self.queuedCards} codes.")
-        elif message.channel == self.channel and self.queuedCards > 0 and message.author.name == 'Bolond' and message.content == 'Embeds sent!':
-            logger.warning(f"Still {self.queuedCards} cards left to load!")
 
         if message.author.name == self.user.name and f"Loaded {self.queuedCards} codes." in message.content:
             await self.calculateCardLoadTime(self.queuedCards)
             await self.getCard(self.data)
+
+        if message.author == self.karuta_bot and message.content == f'<@{self.user.id}>, that code is invalid.':
+            logger.warning(f"Invalid code: {self.tempcard}")
+            self.queuedCards -= 1
             
         if message.author == self.karuta_bot and message.embeds:
             embed = message.embeds[0]
@@ -117,16 +119,17 @@ class bolondBot(discord.Client):
         
 async def getEmptyLinks():
     while True:
+        await asyncio.sleep(1)
         if client.queuedCards == 0:
             async with aiohttp.ClientSession() as session:
                 data = {"b": 1}
-                async with session.get('http://127.0.0.1/getEmptyLinks', data=data) as resp:
+                async with session.post('http://127.0.0.1/getEmptyLinks', data=data) as resp:
                     respText = await resp.text()
                     if respText:
                         if respText != 'Okés':
                             logger.error(respText)
-        else:
-            logger.warning("Not checking for empty links because there are still cards to load!")
+        #else:
+            #logger.warning("Not checking for empty links because there are still cards to load!")
         await asyncio.sleep(10)
 
 client = bolondBot()
