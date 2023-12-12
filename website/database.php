@@ -231,6 +231,7 @@ class kapcsolat{
         $result = $this->mysqli->query($query);
         $waitC = 0;
         $doneC = 0;
+        $this->clearInvalid();
         foreach($result as $link){
             if($link['link'] == ""){
                 $waitC++;
