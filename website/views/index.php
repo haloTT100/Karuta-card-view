@@ -47,7 +47,8 @@
         
     </div>
     <script>
-      setTimeout(updateStatus(), 2000);
+      
+
       function updateStatus(){
         $.post("/getCardsStatus",
         {
@@ -58,6 +59,9 @@
           document.getElementById("doneStatus").innerHTML = data['d'];
         });
       }
+
+      let intervalId = setInterval(updateStatus, 2000);
+clearInterval(intervalId);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
