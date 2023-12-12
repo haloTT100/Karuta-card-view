@@ -5,7 +5,6 @@
 
 
 include "database.php";
-include "config.php";
 ini_set('max_execution_time', '300');
 
 
@@ -42,6 +41,7 @@ function removeBurnedCards($data){
 
 function saveCards($data){
     
+    include "config.php";
     $conn = new kapcsolat();
 
     $botCounter = 1;
