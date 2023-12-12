@@ -69,8 +69,7 @@ class bolondBot(discord.Client):
             await self.getCard(self.data)
 
         if message.author == self.karuta_bot and message.content == f'<@{self.user.id}>, that code is invalid.':
-            logger.warning(f"Invalid code: {self.tempcard}")
-            self.queuedCards -= 1
+            await self.postCard('invalid', self.tempcard, 0)
             
         if message.author == self.karuta_bot and message.embeds:
             embed = message.embeds[0]
@@ -86,9 +85,12 @@ class bolondBot(discord.Client):
             self.tempcard = data.pop(0)
             await self.channel.send(f"kv {self.tempcard}")
             await asyncio.sleep(10)
-                
+            
     async def postCard(self, url, code, quality):
-        logger.info(f"Posting card: {code}")
+        if url == 'invalid':
+            logger.warning(f"Invalid code: {code}")
+        else:
+            logger.info(f"Posting card: {code}")
         logger.info(f"Quality: {quality}")
         logger.info(f"URL: {url}")
         async with aiohttp.ClientSession() as session:
@@ -102,10 +104,10 @@ class bolondBot(discord.Client):
                     logger.info(f"Cards left: {self.queuedCards}")
                     if self.queuedCards == 0:
                         logger.info("All cards loaded from messages!")
+                        await asyncio.sleep(10)
                 else:
                     logger.error(respText)
-
-
+       
     async def calculateCardLoadTime(self, cards):
         total_secs = cards * 10
         hours = total_secs // 3600
@@ -119,7 +121,6 @@ class bolondBot(discord.Client):
         
 async def getEmptyLinks():
     while True:
-        await asyncio.sleep(3)
         if client.queuedCards == 0:
             async with aiohttp.ClientSession() as session:
                 data = {"b": 3}
