@@ -31,6 +31,7 @@ class bolondBot(discord.Client):
         self.queuedCards = 0
         self.needToLoad = False
         self.receiveEmptyLinks = None
+        self.sync = True
 
     async def on_ready(self):
 
@@ -63,6 +64,7 @@ class bolondBot(discord.Client):
                 logger.info(f"{self.data}")
                 self.queuedCards = len(self.data)
                 await self.channel.send(f"Loaded {self.queuedCards} codes.")
+                self.sync = False
 
         if message.author.name == self.user.name and f"Loaded {self.queuedCards} codes." in message.content:
             await self.calculateCardLoadTime(self.queuedCards)
@@ -90,9 +92,7 @@ class bolondBot(discord.Client):
         if url == 'invalid':
             logger.warning(f"Invalid code: {code}")
         else:
-            logger.info(f"Posting card: {code}")
-        logger.info(f"Quality: {quality}")
-        logger.info(f"URL: {url}")
+            logger.info(f"Posting card: {code}, Quality: {quality}, URL: {url}")
         async with aiohttp.ClientSession() as session:
             data = {"link": url,
                     "code": code,
@@ -105,6 +105,7 @@ class bolondBot(discord.Client):
                     if self.queuedCards == 0:
                         logger.info("All cards loaded from messages!")
                         await asyncio.sleep(10)
+                        self.sync = True
                 else:
                     logger.error(respText)
        
@@ -121,7 +122,7 @@ class bolondBot(discord.Client):
         
 async def getEmptyLinks():
     while True:
-        if client.queuedCards == 0:
+        if client.queuedCards == 0 and client.sync == True:
             async with aiohttp.ClientSession() as session:
                 data = {"b": 2}
                 async with session.post('http://127.0.0.1/getEmptyLinks', data=data) as resp:
