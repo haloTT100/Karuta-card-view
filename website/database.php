@@ -36,7 +36,8 @@ class kapcsolat{
             wishlists int(11) NOT NULL,
             effort int(11) NOT NULL,
             link varchar(255),
-            userID int(11)
+            userID int(11),
+            botID int(11)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
           $this->mysqli->query($tableInit);
@@ -62,6 +63,7 @@ class kapcsolat{
     }
 
     public function saveLink($code, $link, $quality){
+        if("")
         $sql="UPDATE links SET link='".$link."', quality=".$quality." WHERE code='".$code."'";
         $this->mysqli->query($sql);
     }
@@ -86,7 +88,7 @@ class kapcsolat{
         return true;
     }
 
-    public function saveCard($card){
+    public function saveCard($card, $botNum){
         if (session_status() === PHP_SESSION_NONE) session_start();
         $userID = $this->getUserIdByEmail($_SESSION['email']);
 
@@ -117,7 +119,7 @@ class kapcsolat{
             wishlists, 
             effort, 
             link, 
-            userID) VALUES (
+            userID, botID) VALUES (
                 "'.$code.'",
                 '.$number.',
                 '.$edition.',
@@ -128,22 +130,17 @@ class kapcsolat{
                 '.$wishlists.',
                 '.$effort.',
                 "",
-                '.$userID.')';
+                '.$userID.','.$botNum.')';
 
                 //print($sql);
         $this->mysqli->query($sql);
     }
 
-    public function getEmptyLinks(){
+    public function getEmptyLinks($botNum){
 
-        $sql1 = "SELECT * FROM links WHERE link LIKE '' LIMIT 100";
+        $sql1 = "SELECT * FROM links WHERE link LIKE '' AND botID LIKE ".$botNum." LIMIT 100";
         
         $res = $this->mysqli->query($sql1);
-        foreach($res as $c){
-            $sql2 = "UPDATE links SET link='Wait' WHERE code LIKE '".$c['code']."'";
-            $this->mysqli->query($sql2);
-        }
-
 
         return $res;
     }
