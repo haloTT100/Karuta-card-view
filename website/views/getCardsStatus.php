@@ -4,5 +4,5 @@ $conn = new kapcsolat();
 
 
 $array = $conn->getStatusByUser();
-echo "w: ".$array[0].", d: ".$array[1];
+echo "{w: ".$array[0].", d: ".$array[1]."}";
 ?>
