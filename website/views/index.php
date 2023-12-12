@@ -18,6 +18,10 @@
       <a class="btn btn-light m-3" href="/upload">Upload</a>
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
     </div>
+    <div>
+      <h6 id="waitStatus">0</h6>
+      <h6 id="doneStatus">0</h6>
+    </div>
     <?php
       if(isset($GET['uploadSuccess'])){
         echo '<p class="alert alert-success">';
@@ -49,7 +53,9 @@
         {
         },
         function(data, status){
-          alert("Data: " + data + "\nStatus: " + status);
+          
+          document.getElementById("waitStatus").innerHTML = data['w'];
+          document.getElementById("doneStatus").innerHTML = data['d'];
         });
       }
     </script>
