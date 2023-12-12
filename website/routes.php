@@ -24,7 +24,7 @@ post('/getEmptyLinks', 'views/getEmptyLinks.php');
 
 // Dynamic GET. Example with 1 variable
 // The $id will be available in user.php
-//get('/user/$id', 'views/user');
+//get('/user/$username', 'views/index.php');
 
 // Dynamic GET. Example with 2 variables
 // The $name will be available in full_name.php
