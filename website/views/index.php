@@ -21,6 +21,7 @@
     <div>
       <h6>All card: </h6><h6 id="waitStatus">0</h6>
       <h6>Done: </h6><h6 id="doneStatus">0</h6>
+      <h6>Estimated time: </h6><h6 id="estimatedTime">sad</h6>
     </div>
     <?php
       if(isset($GET['uploadSuccess'])){
@@ -57,6 +58,7 @@
           
           document.getElementById("waitStatus").innerHTML = data['w'];
           document.getElementById("doneStatus").innerHTML = data['d'];
+          document.getElementById("estimatedTime").innerHTML = data['ETA'];
         });
       }
 

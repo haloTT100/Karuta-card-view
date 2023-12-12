@@ -92,7 +92,7 @@ class bolondBot(discord.Client):
         if url == 'invalid':
             logger.warning(f"Invalid code: {code}")
         else:
-            logger.info(f"Posting card: {code}, Quality: {quality}, URL: {url}")
+            logger.info(f"Posting card: {code}, Quality: {quality}, URL: {url.split('/')[6]}")
         async with aiohttp.ClientSession() as session:
             data = {"link": url,
                     "code": code,
