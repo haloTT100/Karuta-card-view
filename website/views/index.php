@@ -19,8 +19,8 @@
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
     </div>
     <div>
-      <h6 id="waitStatus">0</h6>
-      <h6 id="doneStatus">0</h6>
+      <h6>All card: </h6><h6 id="waitStatus">0</h6>
+      <h6>Done: </h6><h6 id="doneStatus">0</h6>
     </div>
     <?php
       if(isset($GET['uploadSuccess'])){
@@ -47,7 +47,7 @@
         
     </div>
     <script>
-      
+      updateStatus();
 
       function updateStatus(){
         $.post("/getCardsStatus",
