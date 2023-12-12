@@ -27,6 +27,7 @@ function getPack($bn){
 
     $conn = new kapcsolat();
     $cards = $conn->getEmptyLinks($bn);
+    $conn->clearInvalid();
 
     $codeArray = "";
     foreach($cards as $card){

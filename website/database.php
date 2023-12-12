@@ -73,6 +73,11 @@ class kapcsolat{
         $this->mysqli->query($sql);
     }
 
+    public function clearInvalid(){
+        $sql="DELETE FROM links WHERE link='invalid'";
+        $this->mysqli->query($sql);
+    }
+
     public function isCodeExits($code, $quality){
 
         $checkSQL ="SELECT * FROM links WHERE code LIKE '".$code."'";
