@@ -139,7 +139,6 @@ class kapcsolat{
     public function getEmptyLinks($botNum){
 
         $sql1 = "SELECT * FROM links WHERE link LIKE '' AND botID LIKE ".$botNum." LIMIT 100";
-        
         $res = $this->mysqli->query($sql1);
 
         return $res;
