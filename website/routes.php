@@ -21,6 +21,7 @@ get('/register', 'views/reg.php');
 post('/register', 'views/reg.php');
 post('/saveLink', 'views/saveLink.php');
 post('/getEmptyLinks', 'views/getEmptyLinks.php');
+post('/getCardsStatus', 'views//getCardsStatus.php');
 
 // Dynamic GET. Example with 1 variable
 // The $id will be available in user.php

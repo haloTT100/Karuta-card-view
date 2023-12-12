@@ -213,7 +213,7 @@ class kapcsolat{
     public function getUserIdByEmail($email) {
         $email = $this->mysqli->real_escape_string($email);
 
-        $query = "SELECT id FROM users WHERE email = '$email'";
+        $query = "SELECT id FROM users WHERE email = '".$email."'";
         $result = $this->mysqli->query($query);
 
         if ($result && $result->num_rows > 0) {
@@ -222,6 +222,26 @@ class kapcsolat{
         } else {
             return null; // Ha nincs találat
         }
+    }
+
+    public function getStatusByUser(){
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $userID = $this->getUserIdByEmail($_SESSION['email']);
+        $query = "SELECT link FROM links WHERE userID = ".$userID;
+        $result = $this->mysqli->query($query);
+        $waitC = 0;
+        $doneC = 0;
+        foreach($result as $link){
+            if($link['link'] == ""){
+                $waitC++;
+            } else{
+                $doneC++;
+            }
+        }
+        $returnArray = array();
+        array_push($returnArray, $waitC);
+        array_push($returnArray, $doneC);
+        return $returnArray;
     }
 }
 
