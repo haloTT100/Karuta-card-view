@@ -228,10 +228,11 @@ class kapcsolat{
         if (session_status() === PHP_SESSION_NONE) session_start();
         $userID = $this->getUserIdByEmail($_SESSION['email']);
         $query = "SELECT link FROM links WHERE userID = ".$userID;
+        
+        $this->clearInvalid();
         $result = $this->mysqli->query($query);
         $waitC = 0;
         $doneC = 0;
-        $this->clearInvalid();
         foreach($result as $link){
             if($link['link'] == ""){
                 $waitC++;
