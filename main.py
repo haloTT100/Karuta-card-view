@@ -1,4 +1,10 @@
 import asyncio
+import json
+
+with open('secret.json', 'r', encoding='utf8') as f:
+    git = json.load(f)
+
+repo_url = f"https://{git['git']}:x-oauth-basic@github.com/haloTT100/Karuta-card-view.git"
 
 async def run_bot(bot_script):
     process = await asyncio.create_subprocess_exec('python', '-Xfrozen_modules=off', bot_script)
@@ -6,7 +12,7 @@ async def run_bot(bot_script):
 
 async def git_pull():
     while True:
-        process = await asyncio.create_subprocess_exec('git', 'pull')
+        process = await asyncio.create_subprocess_exec('git', 'pull', repo_url, 'dev')
         await process.wait()
         await asyncio.sleep(60)
 
