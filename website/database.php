@@ -36,7 +36,8 @@ class kapcsolat{
             wishlists int(11) NOT NULL,
             effort int(11) NOT NULL,
             link varchar(255),
-            userID int(11)
+            userID int(11),
+            botID int(11)
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
 
           $this->mysqli->query($tableInit);
@@ -61,9 +62,10 @@ class kapcsolat{
         return $res;
     }
 
-    public function saveLink($code, $link){
-        $sql="UPDATE links SET link='".$link."' WHERE code='".$code."'";
+    public function saveLink($code, $link, $quality){
+             $sql="UPDATE links SET link='".$link."', quality=".$quality." WHERE code='".$code."'";
         $this->mysqli->query($sql);
+
     }
 
     public function deleteLink($code){
@@ -71,19 +73,27 @@ class kapcsolat{
         $this->mysqli->query($sql);
     }
 
-    public function isCodeExits($code){
+    public function clearInvalid(){
+        $sql="DELETE FROM links WHERE link='invalid'";
+        $this->mysqli->query($sql);
+    }
+
+    public function isCodeExits($code, $quality){
 
         $checkSQL ="SELECT * FROM links WHERE code LIKE '".$code."'";
         $res = $this->mysqli->query($checkSQL);
         
         if($res->num_rows == 0){
             return false;
+        }else{
+            $sqlUpdate ="UPDATE links SET quality='".$quality."' WHERE code='".$code."'";
+            $res = $this->mysqli->query($sqlUpdate);
         }
 
         return true;
     }
 
-    public function saveCard($card){
+    public function saveCard($card, $botNum){
         if (session_status() === PHP_SESSION_NONE) session_start();
         $userID = $this->getUserIdByEmail($_SESSION['email']);
 
@@ -114,7 +124,7 @@ class kapcsolat{
             wishlists, 
             effort, 
             link, 
-            userID) VALUES (
+            userID, botID) VALUES (
                 "'.$code.'",
                 '.$number.',
                 '.$edition.',
@@ -125,18 +135,16 @@ class kapcsolat{
                 '.$wishlists.',
                 '.$effort.',
                 "",
-                '.$userID.')';
+                '.$userID.','.$botNum.')';
 
                 //print($sql);
         $this->mysqli->query($sql);
     }
 
-    public function getEmptyLinks(){
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        $userID = $this->getUserIdByEmail($_SESSION['email']);
+    public function getEmptyLinks($botNum){
 
-        $sql = "SELECT * FROM links WHERE userID LIKE ".$userID." AND link LIKE '' ";
-        $res = $this->mysqli->query($sql);
+        $sql1 = "SELECT * FROM links WHERE link LIKE '' AND botID LIKE ".$botNum." LIMIT 100";
+        $res = $this->mysqli->query($sql1);
 
         return $res;
     }
@@ -205,7 +213,7 @@ class kapcsolat{
     public function getUserIdByEmail($email) {
         $email = $this->mysqli->real_escape_string($email);
 
-        $query = "SELECT id FROM users WHERE email = '$email'";
+        $query = "SELECT id FROM users WHERE email = '".$email."'";
         $result = $this->mysqli->query($query);
 
         if ($result && $result->num_rows > 0) {
@@ -214,6 +222,28 @@ class kapcsolat{
         } else {
             return null; // Ha nincs találat
         }
+    }
+
+    public function getStatusByUser(){
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $userID = $this->getUserIdByEmail($_SESSION['email']);
+        $query = "SELECT link FROM links WHERE userID = ".$userID;
+        
+        $this->clearInvalid();
+        $result = $this->mysqli->query($query);
+        $waitC = 0;
+        $doneC = 0;
+        foreach($result as $link){
+            if($link['link'] == ""){
+                $waitC++;
+            } else{
+                $doneC++;
+            }
+        }
+        $returnArray = array();
+        array_push($returnArray, $waitC);
+        array_push($returnArray, $doneC);
+        return $returnArray;
     }
 }
 

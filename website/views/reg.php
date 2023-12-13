@@ -20,11 +20,13 @@ include "database.php";
 if(isset($_POST['regForm'])){
     $conn = new kapcsolat();
     $res = $conn->registerUser($_REQUEST['username'], $_REQUEST['password1'], $_REQUEST['password2'], $_REQUEST['email']);
-    if($res == "Registration successful!")
+    if($res == "Registration successful!") {
         echo '<p class="alert alert-success">';
-    else
+      sleep(2);
+      header('Location: /login'); }
+    else {
         echo '<p class="alert alert-danger">';
-
+    }
     echo $res;
     echo '</p>';
 }
