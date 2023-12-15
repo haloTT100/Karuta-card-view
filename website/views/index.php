@@ -73,9 +73,9 @@
         },
         function(data, status){
           
-          document.getElementById("waitStatus").innerHTML = data['w'];
-          document.getElementById("doneStatus").innerHTML = data['d'];
-          document.getElementById("estimatedTime").innerHTML = data['ETA'];
+          document.getElementById("waitingCards").innerHTML = data['w'];
+          document.getElementById("doneCards").innerHTML = data['d'];
+          document.getElementById("downloadTime").innerHTML = data['ETA'];
         });
       }
 
