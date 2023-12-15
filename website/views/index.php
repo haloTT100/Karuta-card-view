@@ -68,7 +68,7 @@
       updateStatus();
 
       function updateStatus(){
-        $.post("/getcsStatus",
+        $.post("/getCardsStatus",
         {
         },
         function(data, status){
