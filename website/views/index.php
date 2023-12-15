@@ -73,7 +73,7 @@
         },
         function(data, status){
           
-          document.getElementById("waitingCards").textContent = data['w'] + " card";
+          document.getElementById("waitngCards").textContent = data['w'] + " card";
           document.getElementById("doneCards").textContent = data['d'] + " card";
           document.getElementById("downloadTime").textContent = data['ETA'];
         });
