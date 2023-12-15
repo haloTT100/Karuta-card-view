@@ -3,27 +3,20 @@ body{
     
 }
 *{
-  color: white;
+  color: rgb(255, 255, 255);
+  background-color: rgb(29, 29, 29);
+  box-sizing: border-box;
 }
 
-.card{
-    width: 100vw;
+.c img{
+  opacity: 100%;
+  width: 100%;
+  padding: 0;
 }
 
-.cards .c{
-
-  
-    border-radius: 20px;
-    background-color: black;
-
-
-
-}
-
-.cards .c{
-  -webkit-animation: slit-in-vertical 0.45s ease-out both;
-  animation: slit-in-vertical 0.45s ease-out both;
-  animation-iteration-count: 1;
+.c img:hover {
+  opacity: 50%;
+  padding: 20px;
 }
 
 .form-container {

@@ -14,14 +14,26 @@
     <title>ne néz ide</title>
   </head>
   <body>
+    <main class="px-3">
     <div class="text-center">
       <a class="btn btn-light m-3" href="/upload">Upload</a>
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
     </div>
-    <div>
-      <h6>All card: </h6><h6 id="waitStatus">0</h6>
-      <h6>Done: </h6><h6 id="doneStatus">0</h6>
-      <h6>Estimated time: </h6><h6 id="estimatedTime">sad</h6>
+    <div class="row text-center m-0 w-100 border border-info p-1">
+      <div class="col-4 m-0">
+        <h6>Waiting for a bot: <span id="waitngCards">2031 card</span></h6>
+      </div>
+      <div class="col-4 row m-0">
+        <div class="col-12">
+          <h6>Downloading: <span id="downCards">100 card</span></h6>
+        </div> 
+        <div class="col-12">
+          <h6>Download time: <span id="downloadTime">1h 12m 32s</span></h6>
+        </div>
+      </div>
+      <div class="col-4 m-0">
+        <h6>Done: <span id="doneCards">35 card</span></h6>
+      </div>
     </div>
     <?php
       if(isset($GET['uploadSuccess'])){
@@ -32,26 +44,31 @@
         header('Location: /');
       }
     ?>
-    <div class="cards row text-center m-0 p-0">
+
+    <div class="row cards p-2 m-0">
         <?php
         include "database.php";
         $conn = new kapcsolat();
         $res = $conn->getLinks();
         foreach($res as $link){
-            print('<div class="col-4 p-3 px-5"><div class="c">');
+            print('<div class="m-0 c col-6 col-lg-2">');
             print('<img src="'.$link['link'].'">');
-            print('</div></div>');
-
+            print('</div>');
           }
         ?>
         
         
+
+              
+
+
     </div>
+    </main>
     <script>
       updateStatus();
 
       function updateStatus(){
-        $.post("/getCardsStatus",
+        $.post("/getcsStatus",
         {
         },
         function(data, status){
