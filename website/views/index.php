@@ -57,7 +57,7 @@
     </main>
     <script>
 
-var limit = 20; //The number of records to display per request
+var limit = 100; //The number of records to display per request
  var start = 0; //The starting pointer of the data
  var action = 'inactive'; //Check if current action is going on or not. If not then inactive otherwise active
  load_country_data(limit, start);
@@ -72,7 +72,7 @@ var limit = 20; //The number of records to display per request
    {
 
     $('#load_data').append(data);
-    
+    action = 'inactive';
    }
   });
  }
