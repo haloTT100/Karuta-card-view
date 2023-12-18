@@ -289,7 +289,6 @@ class kapcsolat{
         "AND char_name LIKE '%".$char_name."%' AND series LIKE '%".$series."%' ".
          $orderBy . 
          "LIMIT ".$start.", ".$limit."";
-        print($query);
         $result = $this->mysqli->query($query);
         return $result;
     }
