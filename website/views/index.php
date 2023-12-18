@@ -2,6 +2,73 @@
 <?php
   session_start();
   if(!isset($_SESSION['username'])) header('Location: /login');
+  include "database.php";
+  $conn = new kapcsolat();
+  $minMaxArray = $conn->getUserMinMax();
+
+  $char_name = "";
+  $series = "";
+
+  $numberMin = $minMaxArray[1];
+  $numberMax = $minMaxArray[0];
+
+
+  $editionMin = $minMaxArray[3];
+  $editionMax = $minMaxArray[2];
+
+  
+  $wishlistMin = $minMaxArray[5];
+  $wishlistMax = $minMaxArray[4];
+
+  
+  $qualityMin = $minMaxArray[7];
+  $qualityMax = $minMaxArray[6];
+
+  
+  $effortMin = $minMaxArray[9];
+  $effortMax = $minMaxArray[8];
+
+  $numberOrder = 'x';
+  $editionOrder = 'x';
+  $wishlistOrder = 'x';
+  $qualityOrder = 'x';
+  $effortOrder = 'x';
+  $charNameOrder = 'x';
+  $seriesOrder = 'x';
+
+  $frame = 'checked';
+
+if(isset($_POST['filter'])){
+  $char_name = $_POST['char_name'];
+  $series = $_POST['series'];
+
+  $numberMin = $_POST['number_min'];
+  $numberMax = $_POST['number_max'];
+
+  $editionMin = $_POST['edition_min'];
+  $editionMax = $_POST['edition_max'];
+
+  $wishlistMin =  $_POST['wishlist_min'];
+  $wishlistMax = $_POST['wishlist_max'];
+
+  $qualityMin = $_POST['quality_min'];
+  $qualityMax = $_POST['quality_max'];
+
+  $effortMin = $_POST['effort_min'];
+  $effortMax = $_POST['effort_max'];
+
+  $frame = isset($_POST['frame']) ? 'checked' : '';
+
+  $numberOrder = $_POST['number_order'];
+  $editionOrder = $_POST['edition_order'];
+  $wishlistOrder = $_POST['wishlist_order'];
+  $qualityOrder = $_POST['quality_order'];
+  $effortOrder = $_POST['effort_order'];
+  $charNameOrder = $_POST['char_name_order'];
+  $seriesOrder = $_POST['series_order'];
+}
+
+  
 ?>
 <html lang="hu">
   <head>
@@ -19,27 +86,27 @@
       <a class="btn btn-light m-3" href="/upload">Upload</a>
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
     </div>
-        <form class="text-center w-100 border border-info p-3 mb-2">
-            <div class="row m-0 my-2">
+    <form class="text-center w-100 border border-info p-3 mb-2" method="POST" action="/">
+            <div class="row m-0 mb-2">
                 <div class="col-6 row m-0">
                     <div class="col-3 p-1 text-end"><label for="char_name" class="form-label">Character name:</label></div>
-                    <div class="col-6"><input type="text" class="form-control" name="char_name" id="char_name" placeholder=""></div>
-                    <div class="col-3">
+                    <div class="col-7"><?php echo '<input type="text" class="form-control" name="char_name" id="char_name" placeholder="" value="'.$char_name.'">';?></div>
+                    <div class="col-2">
                         <select class="form-select" aria-label="char_name_select" name="char_name_order">
-                            <option value="x" selected>X</option>
-                            <option value="u">ABC</option>
-                            <option value="d">CBA</option>
+                            <option value="x" <?php echo $charNameOrder == 'x' ? 'selected':''; ?>>X</option>
+                            <option value="u" <?php echo $charNameOrder == 'u' ? 'selected':''; ?>>ABC</option>
+                            <option value="d" <?php echo $charNameOrder == 'd' ? 'selected':''; ?>>CBA</option>
                         </select>
                     </div>  
                 </div>
                 <div class="col-6 row m-0">
                     <div class="col-3 p-1 text-end"><label for="series" class="form-label ">Series:</label></div>
-                    <div class="col-6"><input type="text" class="form-control" name="series" id="series" placeholder=""></div>
-                    <div class="col-3">
+                    <div class="col-7"><?php echo '<input type="text" class="form-control" name="series" id="series" placeholder="" value="'.$series.'">';?></div>
+                    <div class="col-2">
                         <select class="form-select" aria-label="series_select" name="series_order">
-                            <option value="x" selected>X</option>
-                            <option value="u">ABC</option>
-                            <option value="d">CBA</option>
+                            <option value="x" <?php echo $seriesOrder == 'x' ? 'selected':''; ?>>X</option>
+                            <option value="u" <?php echo $seriesOrder == 'u' ? 'selected':''; ?>>ABC</option>
+                            <option value="d" <?php echo $seriesOrder == 'd' ? 'selected':''; ?>>CBA</option>
                         </select>
                     </div>  
                 </div>
@@ -47,42 +114,48 @@
             </div>
             <div class="row m-0 mb-2">
                 <div class="col-6 row m-0">
-                    <div class="col-3 p-1 text-end"><label for="number" class="form-label">Number:</label></div>
-                    <div class="col-6 row m-0">
-                        <div class="col-3 p-1"><input type="number" class="form-range" min="0" max="500" step="1" id="number" value="0" name="number"></div>
-                        <div class="col-9 p-0 ">
-                            <input type="range" class="form-range" min="0" max="500" step="1" id="number_range">
+                    <div class="col-3 p-1 text-end"><label class="form-label">Number:</label></div>
+                    <div class="col-7 row m-0">
+                        <div class="col-2"><label class="form-label">Min:</label></div>
+                        <div class="col-3 p-1"><?php echo'<input type="number" class="form-range" min="'.$minMaxArray[1].'" max="'.$minMaxArray[0].'" step="1" id="number_min" value="'.$numberMin.'" name="number_min">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="number_min_range">
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-4 p-0 text-start"><label class="form-label" id="number_min">Min: 0</label></div>
-                        <div class="col-5 p-0 text-end"><label class="form-label" id="number_max">Max: 500</label></div>
+                        <div class="col-2"><label class="form-label">Max:</label></div>
+                        <div class="col-3 p-1"><?php echo'<input type="number" class="form-range" min="'.$minMaxArray[1].'" max="'.$minMaxArray[0].'" step="1" id="number_max" value="'.$numberMax.'" name="number_max">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="number_max_range">
+                        </div>
                         
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <select class="form-select" aria-label="number select" name="number_order">
-                            <option value="x" selected>X</option>
-                            <option value="u">123</option>
-                            <option value="d">321</option>
+                            <option value="x" <?php echo $numberOrder == 'x' ? 'selected':''; ?>>X</option>
+                            <option value="u" <?php echo $numberOrder == 'u' ? 'selected':''; ?>>123</option>
+                            <option value="d" <?php echo $numberOrder == 'd' ? 'selected':''; ?>>321</option>
                         </select>
                     </div>  
                 </div>
                 <div class="col-6 row m-0">
-                    <div class="col-3 p-1 text-end"><label for="edition" class="form-label">Edition:</label></div>
-                    <div class="col-6 row m-0">
-                        <div class="col-3 p-1"><input type="number" class="form-range" min="1" max="6" step="1" id="edition" value="1" name="edition"></div>
-                        <div class="col-9 p-0 ">
-                            <input type="range" class="form-range" min="1" max="6" step="1" id="edition_range">
+                    <div class="col-3 p-1 text-end"><labelclass="form-label">Edition:</labelclass=></div>
+                    <div class="col-7 row m-0">
+                        <div class="col-2"><label class="form-label">Min:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[3].'" max="'.$minMaxArray[2].'" step="1" id="edition_min" value="'.$editionMin.'" name="edition_min">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="edition_min_range">
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-4 p-0 text-start"><label class="form-label" id="edition_min">Min: 0</label></div>
-                        <div class="col-5 p-0 text-end"><label class="form-label" id="edition_max">Max: 500</label></div>
+                        <div class="col-2"><label class="form-label">Max:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[3].'" max="'.$minMaxArray[2].'" step="1" id="edition_max" value="'.$editionMax.'" name="edition_max">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="edition_max_range">
+                        </div>
                         
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <select class="form-select" aria-label="edition_select" name="edition_order">
-                            <option value="x" selected>X</option>
-                            <option value="u">123</option>
-                            <option value="d">321</option>
+                            <option value="x" <?php echo $editionOrder == 'x' ? 'selected':''; ?>>X</option>
+                            <option value="u" <?php echo $editionOrder == 'u' ? 'selected':''; ?>>123</option>
+                            <option value="d" <?php echo $editionOrder == 'd' ? 'selected':''; ?>>321</option>
                         </select>
                     </div>  
                 </div>
@@ -90,42 +163,48 @@
             </div>
             <div class="row m-0 mb-2">
                 <div class="col-6 row m-0">
-                    <div class="col-3 p-1 text-end"><label for="wishlist" class="form-label">Wishlist:</label></div>
-                    <div class="col-6 row m-0">
-                        <div class="col-3 p-1"><input type="number" class="form-range" min="0" max="500" step="1" id="wishlist" value="0" name="wishlist"></div>
-                        <div class="col-9 p-0 ">
-                            <input type="range" class="form-range" min="0" max="500" step="1" id="wishlist_range">
+                    <div class="col-3 p-1 text-end"><label class="form-label">Wishlist:</label></div>
+                    <div class="col-7 row m-0">
+                        <div class="col-2"><label class="form-label">Min:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[5].'" max="'.$minMaxArray[4].'" step="1" id="wishlist_min" value="'.$wishlistMin.'" name="wishlist_min">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="wishlist_min_range">
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-4 p-0 text-start"><label class="form-label" id="wishlist_min">Min: 0</label></div>
-                        <div class="col-5 p-0 text-end"><label class="form-label" id="wishlist_max">Max: 500</label></div>
+                        <div class="col-2"><label class="form-label">Max:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[5].'" max="'.$minMaxArray[4].'" step="1" id="wishlist_max" value="'.$wishlistMax.'" name="wishlist_max">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="wishlist_max_range">
+                        </div>
                         
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <select class="form-select" aria-label="wishlist select" name="wishlist_order">
-                            <option value="x" selected>X</option>
-                            <option value="u">123</option>
-                            <option value="d">321</option>
+                        <option value="x" <?php echo $wishlistOrder == 'x' ? 'selected':''; ?>>X</option>
+                            <option value="u" <?php echo $wishlistOrder == 'u' ? 'selected':''; ?>>123</option>
+                            <option value="d" <?php echo $wishlistOrder == 'd' ? 'selected':''; ?>>321</option>
                         </select>
                     </div>  
                 </div>
                 <div class="col-6 row m-0">
-                    <div class="col-3 p-1 text-end"><label for="quality" class="form-label">Quality:</label></div>
-                    <div class="col-6 row m-0">
-                        <div class="col-3 p-1"><input type="number" class="form-range" min="1" max="6" step="1" id="quality" value="1" name="quality"></div>
-                        <div class="col-9 p-0 ">
-                            <input type="range" class="form-range" min="1" max="6" step="1" id="quality_range">
+                    <div class="col-3 p-1 text-end"><label class="form-label">Quality:</label></div>
+                    <div class="col-7 row m-0">
+                        <div class="col-2"><label class="form-label">Min:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[7].'" max="'.$minMaxArray[6].'" step="1" id="quality_min" value="'.$qualityMin.'" name="quality_min">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="quality_min_range">
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-4 p-0 text-start"><label class="form-label" id="quality_min">Min: 0</label></div>
-                        <div class="col-5 p-0 text-end"><label class="form-label" id="quality_max">Max: 500</label></div>
+                        <div class="col-2"><label class="form-label">Max:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[7].'" max="'.$minMaxArray[6].'" step="1" id="quality_max" value="'.$qualityMax.'" name="quality_max">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="quality_max_range">
+                        </div>
                         
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <select class="form-select" aria-label="quality_select" name="quality_order">
-                            <option value="x" selected>X</option>
-                            <option value="u">123</option>
-                            <option value="d">321</option>
+                        <option value="x" <?php echo $qualityOrder == 'x' ? 'selected':''; ?>>X</option>
+                            <option value="u" <?php echo $qualityOrder == 'u' ? 'selected':''; ?>>123</option>
+                            <option value="d" <?php echo $qualityOrder == 'd' ? 'selected':''; ?>>321</option>
                         </select>
                     </div>  
                 </div>
@@ -133,33 +212,37 @@
             </div>
             <div class="row m-0">
                 <div class="col-6 row m-0">
-                    <div class="col-3 p-1 text-end"><label for="effort" class="form-label">Effort:</label></div>
-                    <div class="col-6 row m-0">
-                        <div class="col-3 p-1"><input type="number" class="form-range" min="0" max="250" step="1" id="effort" value="0" name="effort"></div>
-                        <div class="col-9 p-0 ">
-                            <input type="range" class="form-range" min="0" max="500" step="1" id="effort_range">
+                    <div class="col-3 p-1 text-end"><label class="form-label">Effort:</label></div>
+                    <div class="col-7 row m-0">
+                        <div class="col-2"><label class="form-label">Min:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[9].'" max="'.$minMaxArray[8].'" step="1" id="effort_min" value="'.$effortMin.'" name="effort_min">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="effort_min_range">
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-4 p-0 text-start"><label class="form-label" id="effort_min">Min: 0</label></div>
-                        <div class="col-5 p-0 text-end"><label class="form-label" id="effort_max">Max: 500</label></div>
+                        <div class="col-2"><label class="form-label">Max:</label></div>
+                        <div class="col-3 p-1"><?php echo '<input type="number" class="form-range" min="'.$minMaxArray[9].'" max="'.$minMaxArray[8].'" step="1" id="effort_max" value="'.$effortMax.'" name="effort_max">';?></div>
+                        <div class="col-7 p-0 ">
+                            <input type="range" class="form-range" min="0" max="500" step="1" id="effort_max_range">
+                        </div>
                         
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <select class="form-select" aria-label="effort select" name="effort_order">
-                            <option value="x" selected>X</option>
-                            <option value="u">123</option>
-                            <option value="d">321</option>
+                        <option value="x" <?php echo $effortOrder == 'x' ? 'selected':''; ?>>X</option>
+                            <option value="u" <?php echo $effortOrder == 'u' ? 'selected':''; ?>>123</option>
+                            <option value="d" <?php echo $effortOrder == 'd' ? 'selected':''; ?>>321</option>
                         </select>
                     </div>  
                 </div>
                 <div class="col-6 row m-0">
                     <div class="col-3 p-1 text-end"><label for="frame" class="form-label">Frame:</label></div>
                     <div class="col-6 text-start mt-1">
-                        <input class="form-check-input" type="checkbox" value="" name="frame" id="frame" checked>            
+                        <input class="form-check-input" type="checkbox" name="frame" id="frame" <?php echo $frame; ?>>            
                     </div>
                 </div>
 
             </div>
+            <input type="submit" class="btn btn-light" value="Apply filter" name="filter">
         </form>
         <script src="./js/filter.js"></script>
     <div class="row text-center m-0 w-100 border border-info p-1">
@@ -200,25 +283,47 @@
     </main>
     <script>
 
-var limit = 100; //The number of records to display per request
- var start = 0; //The starting pointer of the data
- var action = 'inactive'; //Check if current action is going on or not. If not then inactive otherwise active
- load_country_data(limit, start);
- function load_country_data(limit, start)
- {
-  $.ajax({
-   url:"/getCards",
-   method:"POST",
-   data:{limit:limit, start:start},
-   cache:false,
-   success:function(data)
-   {
+      var limit = 100; //The number of records to display per request
+      var start = 0; //The starting pointer of the data
+      var action = 'inactive'; //Check if current action is going on or not. If not then inactive otherwise active
+      load_country_data(limit, start);
+      function load_country_data(limit, start)
+      {
+        $.ajax({
+        url:"/getCards",
+        method:"POST",
+        data:{limit:limit,
+           start:start,
+           char_name:'<?php echo $char_name;?>',
+           series:'<?php echo $series;?>',
+           numberMin:<?php echo $numberMin;?>,
+           numberMax:<?php echo $numberMax;?>,
+           editionMin:<?php echo $editionMin;?>,
+           editionMax:<?php echo $editionMax;?>,
+           wishlistMin:<?php echo $wishlistMin;?>,
+           wishlistMax:<?php echo $wishlistMax;?>,
+           qualityMin:<?php echo $qualityMin;?>,
+           qualityMax:<?php echo $qualityMax;?>,
+           effortMin:<?php echo $effortMin;?>,
+           effortMax:<?php echo $effortMax;?>,
+           frame:'<?php echo $frame;?>',
+           numberOrder:'<?php echo $numberOrder;?>',
+           editionOrder:'<?php echo $editionOrder;?>',
+           wishlistOrder:'<?php echo $wishlistOrder;?>',
+           qualityOrder:'<?php echo $qualityOrder;?>',
+           effortOrder:'<?php echo $effortOrder;?>',
+           charNameOrder:'<?php echo $charNameOrder;?>',
+           seriesOrder:'<?php echo $seriesOrder;?>'
+          },
+        cache:false,
+        success:function(data)
+        {
 
-    $('#load_data').append(data);
-    action = 'inactive';
-   }
-  });
- }
+          $('#load_data').append(data);
+          action = 'inactive';
+        }
+        });
+      }
 
 
       $(window).scroll(function(){
@@ -252,3 +357,4 @@ var limit = 100; //The number of records to display per request
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>
+

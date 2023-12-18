@@ -1,105 +1,164 @@
 //INPUTS
-$( "#number" ).on( "change", function() {
-    $("#number_range").val($( "#number" ).val());
+//MIN
+$( "#number_min" ).on( "change", function() {
+    $("#number_min_range").val($( "#number_min" ).val());
   } );
 
-  $( "#edition" ).on( "change", function() {
-    $("#edition_range").val($( "#edition" ).val());
+  $( "#edition_min" ).on( "change", function() {
+    $("#edition_min_range").val($( "#edition_min" ).val());
   } );
 
-  $( "#wishlist" ).on( "change", function() {
-    $("#wishlist_range").val($( "#wishlist" ).val());
+  $( "#wishlist_min" ).on( "change", function() {
+    $("#wishlist_min_range").val($( "#wishlist_min" ).val());
   } );
 
-  $( "#quality" ).on( "change", function() {
-    $("#quality_range").val($( "#quality" ).val());
+  $( "#quality_min" ).on( "change", function() {
+    $("#quality_min_range").val($( "#quality_min" ).val());
   } );
 
-  $( "#effort" ).on( "change", function() {
-    $("#effort_range").val($( "#effort" ).val());
+  $( "#effort_min" ).on( "change", function() {
+    $("#effort_min_range").val($( "#effort_min" ).val());
+  } );
+//MAX
+  $( "#number_max" ).on( "change", function() {
+    $("#number_max_range").val($( "#number_max" ).val());
+  } );
+
+  $( "#edition_max" ).on( "change", function() {
+    $("#edition_max_range").val($( "#edition_max" ).val());
+  } );
+
+  $( "#wishlist_max" ).on( "change", function() {
+    $("#wishlist_max_range").val($( "#wishlist_max" ).val());
+  } );
+
+  $( "#quality_max" ).on( "change", function() {
+    $("#quality_max_range").val($( "#quality_max" ).val());
+  } );
+
+  $( "#effort_max" ).on( "change", function() {
+    $("#effort_max_range").val($( "#effort_max" ).val());
   } );
 
 
 //RANGE
-$( "#number_range" ).on( "change", function() {
-    $("#number").val($( "#number_range" ).val());
+//min
+$( "#number_min_range" ).on( "change", function() {
+    $("#number_min").val($( "#number_min_range" ).val());
   } );
 
-  $( "#edition_range" ).on( "change", function() {
-    $("#edition").val($( "#edition_range" ).val());
+  $( "#edition_min_range" ).on( "change", function() {
+    $("#edition_min").val($( "#edition_min_range" ).val());
   } );
 
-  $( "#wishlist_range" ).on( "change", function() {
-    $("#wishlist").val($( "#wishlist_range" ).val());
+  $( "#wishlist_min_range" ).on( "change", function() {
+    $("#wishlist_min").val($( "#wishlist_min_range" ).val());
   } );
-  $( "#quality_range" ).on( "change", function() {
-    $("#quality").val($( "#quality_range" ).val());
+  $( "#quality_min_range" ).on( "change", function() {
+    $("#quality_min").val($( "#quality_min_range" ).val());
   } );
-  $( "#effort_range" ).on( "change", function() {
-    $("#effort").val($( "#effort_range" ).val());
+  $( "#effort_min_range" ).on( "change", function() {
+    $("#effort_min").val($( "#effort_min_range" ).val());
   } );
+//max
+  $( "#number_max_range" ).on( "change", function() {
+    $("#number_max").val($( "#number_max_range" ).val());
+  } );
+
+  $( "#edition_max_range" ).on( "change", function() {
+    $("#edition_max").val($( "#edition_max_range" ).val());
+  } );
+
+  $( "#wishlist_max_range" ).on( "change", function() {
+    $("#wishlist_max").val($( "#wishlist_max_range" ).val());
+  } );
+  $( "#quality_max_range" ).on( "change", function() {
+    $("#quality_max").val($( "#quality_max_range" ).val());
+  } );
+  $( "#effort_max_range" ).on( "change", function() {
+    $("#effort_max").val($( "#effort_max_range" ).val());
+  } );
+
 
 //number
-var numberMax = $( "#number" ).attr('max');
-var numberMin = $( "#number" ).attr('min');
+var numberMax = $( "#number_min" ).attr('max');
+var numberMin = $( "#number_min" ).attr('min');
 //edition
-var editionMax = $( "#edition" ).attr('max');        
-var editionMin = $( "#edition" ).attr('min');   
+var editionMax = $( "#edition_min" ).attr('max');        
+var editionMin = $( "#edition_min" ).attr('min');   
 //wishlist
-var wishlistMax = $( "#wishlist" ).attr('max');        
-var wishlistMin = $( "#wishlist" ).attr('min');   
+var wishlistMax = $( "#wishlist_min" ).attr('max');        
+var wishlistMin = $( "#wishlist_min" ).attr('min');   
 //quality
-var qualityMax = $( "#quality" ).attr('max');        
-var qualityMin = $( "#quality" ).attr('min');   
+var qualityMax = $( "#quality_min" ).attr('max');        
+var qualityMin = $( "#quality_min" ).attr('min');   
 //effort
-var effortMax = $( "#effort" ).attr('max');        
-var effortMin = $( "#effort" ).attr('min');      
+var effortMax = $( "#effort_min" ).attr('max');        
+var effortMin = $( "#effort_min" ).attr('min');      
+
 
 //SET MAX, MIN
-$("#number_range").attr({
+//MIN
+$("#number_min_range").attr({
     "max" : numberMax,        
     "min" : numberMin          
 });
 
-$("#edition_range").attr({
+$("#edition_min_range").attr({
     "max" : editionMax,        
     "min" : editionMin          
 });
 
-$("#wishlist_range").attr({
+$("#wishlist_min_range").attr({
     "max" : wishlistMax,        
     "min" : wishlistMin          
 });
 
-$("#quality_range").attr({
+$("#quality_min_range").attr({
     "max" : qualityMax,        
     "min" : qualityMin         
 });
 
-$("#effort_range").attr({
+$("#effort_min_range").attr({
+    "max" : effortMax,        
+    "min" : effortMin         
+});
+//MAX
+$("#number_max_range").attr({
+    "max" : numberMax,        
+    "min" : numberMin          
+});
+
+$("#edition_max_range").attr({
+    "max" : editionMax,        
+    "min" : editionMin          
+});
+
+$("#wishlist_max_range").attr({
+    "max" : wishlistMax,        
+    "min" : wishlistMin          
+});
+
+$("#quality_max_range").attr({
+    "max" : qualityMax,        
+    "min" : qualityMin         
+});
+
+$("#effort_max_range").attr({
     "max" : effortMax,        
     "min" : effortMin         
 });
 
-//SET MAX/MIN TEXTS
-$("#number_max").text("Max: " + numberMax);
-$("#number_min").text("Min: " + numberMin);
-
-$("#edition_max").text("Max: " + editionMax);
-$("#edition_min").text("Min: " + editionMin);
-
-$("#wishlist_max").text("Max: " + wishlistMax);
-$("#wishlist_min").text("Min: " + wishlistMin);
-
-$("#quality_max").text("Max: " + qualityMax);
-$("#quality_min").text("Min: " + qualityMin);
-
-$("#effort_max").text("Max: " + effortMax);
-$("#effort_min").text("Min: " + effortMin);
 
 //SET VALUE
-$("#number_range").val($( "#number" ).val());
-$("#edition_range").val($( "#edition" ).val());
-$("#wishlist_range").val($( "#wishlist" ).val());
-$("#quality_range").val($( "#quality" ).val());
-$("#effort_range").val($( "#effort" ).val());
+$("#number_min_range").val($( "#number_min" ).val());
+$("#edition_min_range").val($( "#edition_min" ).val());
+$("#wishlist_min_range").val($( "#wishlist_min" ).val());
+$("#quality_min_range").val($( "#quality_min" ).val());
+$("#effort_min_range").val($( "#effort_min" ).val());
+
+$("#number_max_range").val($( "#number_max" ).val());
+$("#edition_max_range").val($( "#edition_max" ).val());
+$("#wishlist_max_range").val($( "#wishlist_max" ).val());
+$("#quality_max_range").val($( "#quality_max" ).val());
+$("#effort_max_range").val($( "#effort_max" ).val());
