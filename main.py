@@ -3,11 +3,13 @@ import json
 
 with open('secret.json', 'r', encoding='utf8') as f:
     git = json.load(f)
+with open('trianon.json', 'r', encoding='utf8') as f:
+    bots = json.load(f)
 
 repo_url = f"https://{git['git']}:x-oauth-basic@github.com/haloTT100/Karuta-card-view.git"
 
-async def run_bot(bot_script):
-    process = await asyncio.create_subprocess_exec('python', '-Xfrozen_modules=off', bot_script)
+async def run_bot(bot_script, *args):
+    process = await asyncio.create_subprocess_exec('python', '-Xfrozen_modules=off', bot_script, *args)
     await process.wait()
 
 async def git_pull():
@@ -17,14 +19,10 @@ async def git_pull():
         await asyncio.sleep(60)
 
 async def main():
-    # Run bots concurrently
-    await asyncio.gather(
-        run_bot('bot.py'),
-        run_bot('bot2.py'),
-        run_bot('bot3.py'),
-        run_bot('bot4.py'),
-        git_pull()
-    )
-
-# Run the main function
+    tasks = []
+    tasks.append(asyncio.create_task(git_pull()))
+    for name, args in bots.items():
+        tasks.append(asyncio.create_task(run_bot('bot.py', args['token'], name, str(args['channel']), str(args['embedNum'])), name=name))
+    await asyncio.gather(*tasks)
+    
 asyncio.run(main())
