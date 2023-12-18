@@ -45,7 +45,7 @@
       }
     ?>
 
-    <div class="row cards p-2 m-0" id="load-data">
+    <div class="row cards p-2 m-0" id="load_data">
         
         
         
