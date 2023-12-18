@@ -245,6 +245,14 @@ class kapcsolat{
         array_push($returnArray, $doneC);
         return $returnArray;
     }
+
+    public function getCards($start, $limit){
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $userID = $this->getUserIdByEmail($_SESSION['email']);
+        $query = "SELECT * FROM links WHERE userID LIKE ".$userID." ORDER BY code DESC LIMIT ".$start.", ".$limit."";
+        $result = $this->mysqli->query($query);
+        return $result;
+    }
 }
 
 ?>

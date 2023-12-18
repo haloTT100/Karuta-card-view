@@ -45,7 +45,7 @@
       }
     ?>
 
-    <div class="row cards p-2 m-0">
+    <div class="row cards p-2 m-0" id="load-data">
         <?php
         include "database.php";
         $conn = new kapcsolat();
@@ -64,6 +64,39 @@
 
     </div>
     </main>
+    <script>
+
+var limit = 7; //The number of records to display per request
+ var start = 0; //The starting pointer of the data
+ var action = 'inactive'; //Check if current action is going on or not. If not then inactive otherwise active
+ function load_country_data(limit, start)
+ {
+  $.ajax({
+   url:"/getCards",
+   method:"POST",
+   data:{limit:limit, start:start},
+   cache:false,
+   success:function(data)
+   {
+
+    $('#load_data').append(data);
+    
+   }
+  });
+ }
+
+
+      $(window).scroll(function(){
+        if($(window).scrollTop() + $(window).height() > $("#load_data").height() && action == 'inactive')
+        {
+        action = 'active';
+        start = start + limit;
+        setTimeout(function(){
+          load_country_data(limit, start);
+        }, 1000);
+        }
+      });
+    </script>
     <script>
       updateStatus();
 
