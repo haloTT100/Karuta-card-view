@@ -46,16 +46,7 @@
     ?>
 
     <div class="row cards p-2 m-0" id="load-data">
-        <?php
-        include "database.php";
-        $conn = new kapcsolat();
-        $res = $conn->getLinks();
-        foreach($res as $link){
-            print('<div class="m-0 c col-6 col-lg-2">');
-            print('<img src="'.$link['link'].'">');
-            print('</div>');
-          }
-        ?>
+        
         
         
 
