@@ -4,15 +4,17 @@ import asyncio
 import logging
 import aiohttp
 import json
+import argparse
 
-#load vars
-with open('trianon.json', 'r', encoding='utf8') as f:
-    tokens = json.load(f)
-with open('fájdalom.json', 'r', encoding='utf8') as f:
-    channels = json.load(f)
+parser = argparse.ArgumentParser()
+parser.add_argument("token")
+parser.add_argument("name")
+parser.add_argument("channel")
+parser.add_argument("embedNum")
+args = parser.parse_args()
 
 #setup logger
-logger = logging.getLogger("cardurr")
+logger = logging.getLogger(args.name)
 logger.setLevel(logging.DEBUG)
 logger.propagate = False
 for handler in logger.handlers[:]:
@@ -24,7 +26,8 @@ class bolondBot(discord.Client):
     def __init__(self):
         super().__init__()
         self.cshannel = None
-        self.messageLoader = int(channels['carddurr'])
+        self.messageLoader = int(args.channel)
+        self.embedNum = int(args.embedNum)
         self.karuta_bot = None
         self.tempcard = None
         self.data = []
@@ -47,7 +50,7 @@ class bolondBot(discord.Client):
             self.receiveEmptyLinks.cancel()
             await self.close()
 
-        if message.channel == self.channel and self.queuedCards == 0 and message.author.name == 'Bolond' and message.content == 'Embeds sent! Bot:1':
+        if message.channel == self.channel and self.queuedCards == 0 and message.author.name == 'Bolond' and message.content == f'Embeds sent! Bot:{self.embedNum}':
             messages = [msg async for msg in self.messageLoader.history(limit=1000)]
             if messages:
                 await self.messageLoader.purge(limit=1000)
@@ -66,7 +69,7 @@ class bolondBot(discord.Client):
                 await self.channel.send(f"Loaded {self.queuedCards} codes.")
                 self.sync = False
 
-        if message.author.name == self.user.name and f"Loaded {self.queuedCards} codes." in message.content:
+        if message.author == self.user and f"Loaded {self.queuedCards} codes." in message.content:
             await self.calculateCardLoadTime(self.queuedCards)
             await self.getCard(self.data)
 
@@ -124,7 +127,7 @@ async def getEmptyLinks():
     while True:
         if client.queuedCards == 0 and client.sync == True:
             async with aiohttp.ClientSession() as session:
-                data = {"b": 1}
+                data = {"b": int(args.embedNum)}
                 async with session.post('http://127.0.0.1/getEmptyLinks', data=data) as resp:
                     respText = await resp.text()
                     if respText:
@@ -135,4 +138,4 @@ async def getEmptyLinks():
         await asyncio.sleep(10)
 
 client = bolondBot()
-client.run(tokens['carddurr'])
+client.run(args.token)
