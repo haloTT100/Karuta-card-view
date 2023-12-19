@@ -5,7 +5,12 @@
   include "database.php";
   $conn = new kapcsolat();
   $minMaxArray = $conn->getUserMinMax();
-
+ if(count($minMaxArray) == 0){
+  for($i = 0; $i < 5; $i++){
+    array_push($minMaxArray, 1);
+    array_push($minMaxArray, 0);
+  }
+ }
   $char_name = "";
   $series = "";
 
@@ -36,7 +41,7 @@
   $charNameOrder = 'x';
   $seriesOrder = 'x';
 
-  $frame = 'checked';
+  $frame = '';
 
 if(isset($_POST['filter'])){
   $char_name = $_POST['char_name'];
@@ -66,6 +71,10 @@ if(isset($_POST['filter'])){
   $effortOrder = $_POST['effort_order'];
   $charNameOrder = $_POST['char_name_order'];
   $seriesOrder = $_POST['series_order'];
+}
+
+if(isset($_POST['clear'])){
+  $_POST = array();
 }
 
   
@@ -243,6 +252,7 @@ if(isset($_POST['filter'])){
 
             </div>
             <input type="submit" class="btn btn-light" value="Apply filter" name="filter">
+            <input type="submit" class="btn btn-light" value="Clear" name="clear">
         </form>
         <script src="./js/filter.js"></script>
     <div class="row text-center m-0 w-100 border border-info p-1">
