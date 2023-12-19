@@ -1,4 +1,4 @@
-<!doctype html>
+d<!doctype html>
 <?php
   session_start();
   if(!isset($_SESSION['username'])) header('Location: /login');
@@ -87,7 +87,8 @@ if(isset($_POST['clear'])){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="./css/ezamastilus.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <title>ne néz ide</title>
+    <script src="https://kit.fontawesome.com/3e43b66dcd.js" crossorigin="anonymous"></script>
+    <title>Karuta card viewer</title>
   </head>
   <body>
     <main class="px-3">
@@ -95,7 +96,7 @@ if(isset($_POST['clear'])){
       <a class="btn btn-light m-3" href="/upload">Upload</a>
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
     </div>
-    <form class="text-center w-100 border border-info p-3 mb-2" method="POST" action="/">
+    <form class="text-center w-100 border border-info p-3 mb-2 collapse" id="filter" method="POST" action="/">
             <div class="row m-0 mb-2">
                 <div class="col-6 row m-0">
                     <div class="col-3 p-1 text-end"><label for="char_name" class="form-label">Character name:</label></div>
@@ -254,8 +255,13 @@ if(isset($_POST['clear'])){
             <input type="submit" class="btn btn-light" value="Apply filter" name="filter">
             <input type="submit" class="btn btn-light" value="Clear" name="clear">
         </form>
+        <div class="text-center mb-2">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter" aria-expanded="false" aria-controls="filter">
+          <i class="fa-solid fa-chevron-down bg-primary" style="color: #ffffff;"></i>
+          </button>
+        </div>
         <script src="./js/filter.js"></script>
-    <div class="row text-center m-0 w-100 border border-info p-1">
+    <div class="row text-center m-0 w-100 border border-info p-1 collapse" id="status_w">
       <div class="col-4 m-0">
         <h6>Waiting for a bot: <span id="waitngCards">2031 card</span></h6>
       </div>
@@ -270,6 +276,11 @@ if(isset($_POST['clear'])){
       <div class="col-4 m-0">
         <h6>Done: <span id="doneCards">35 card</span></h6>
       </div>
+    </div>
+    <div class="text-center mb-2">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#status_w" aria-expanded="false" aria-controls="status_w">
+          <i class="fa-solid fa-chevron-down bg-primary" style="color: #ffffff;"></i>
+          </button>
     </div>
     <?php
       if(isset($GET['uploadSuccess'])){
