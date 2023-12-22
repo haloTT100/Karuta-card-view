@@ -1,4 +1,4 @@
-d<!doctype html>
+<!doctype html>
 <?php
   session_start();
   if(!isset($_SESSION['username'])) header('Location: /login');
@@ -103,9 +103,9 @@ if(isset($_POST['clear'])){
                     <div class="col-7"><?php echo '<input type="text" class="form-control" name="char_name" id="char_name" placeholder="" value="'.$char_name.'">';?></div>
                     <div class="col-2">
                         <select class="form-select" aria-label="char_name_select" name="char_name_order">
-                            <option value="x" <?php echo $charNameOrder == 'x' ? 'selected':''; ?>>X</option>
-                            <option value="u" <?php echo $charNameOrder == 'u' ? 'selected':''; ?>>ABC</option>
-                            <option value="d" <?php echo $charNameOrder == 'd' ? 'selected':''; ?>>CBA</option>
+                            <option value="x" <?php echo $charNameOrder == 'x' ? 'selected':''; ?>>No filter</option>
+                            <option value="u" <?php echo $charNameOrder == 'u' ? 'selected':''; ?>>Ascending</option>
+                            <option value="d" <?php echo $charNameOrder == 'd' ? 'selected':''; ?>>Descending</option>
                         </select>
                     </div>  
                 </div>
@@ -114,13 +114,12 @@ if(isset($_POST['clear'])){
                     <div class="col-7"><?php echo '<input type="text" class="form-control" name="series" id="series" placeholder="" value="'.$series.'">';?></div>
                     <div class="col-2">
                         <select class="form-select" aria-label="series_select" name="series_order">
-                            <option value="x" <?php echo $seriesOrder == 'x' ? 'selected':''; ?>>X</option>
-                            <option value="u" <?php echo $seriesOrder == 'u' ? 'selected':''; ?>>ABC</option>
-                            <option value="d" <?php echo $seriesOrder == 'd' ? 'selected':''; ?>>CBA</option>
+                            <option value="x" <?php echo $seriesOrder == 'x' ? 'selected':''; ?>>No filter</option>
+                            <option value="u" <?php echo $seriesOrder == 'u' ? 'selected':''; ?>>Ascending</option>
+                            <option value="d" <?php echo $seriesOrder == 'd' ? 'selected':''; ?>>Descending</option>
                         </select>
                     </div>  
                 </div>
-
             </div>
             <div class="row m-0 mb-2">
                 <div class="col-6 row m-0">
@@ -136,13 +135,12 @@ if(isset($_POST['clear'])){
                         <div class="col-7 p-0 ">
                             <input type="range" class="form-range" min="0" max="500" step="1" id="number_max_range">
                         </div>
-                        
                     </div>
                     <div class="col-2">
                         <select class="form-select" aria-label="number select" name="number_order">
-                            <option value="x" <?php echo $numberOrder == 'x' ? 'selected':''; ?>>X</option>
-                            <option value="u" <?php echo $numberOrder == 'u' ? 'selected':''; ?>>123</option>
-                            <option value="d" <?php echo $numberOrder == 'd' ? 'selected':''; ?>>321</option>
+                            <option value="x" <?php echo $numberOrder == 'x' ? 'selected':''; ?>>No filter</option>
+                            <option value="u" <?php echo $numberOrder == 'u' ? 'selected':''; ?>>Ascending</option>
+                            <option value="d" <?php echo $numberOrder == 'd' ? 'selected':''; ?>>Descending</option>
                         </select>
                     </div>  
                 </div>
@@ -163,13 +161,12 @@ if(isset($_POST['clear'])){
                     </div>
                     <div class="col-2">
                         <select class="form-select" aria-label="edition_select" name="edition_order">
-                            <option value="x" <?php echo $editionOrder == 'x' ? 'selected':''; ?>>X</option>
-                            <option value="u" <?php echo $editionOrder == 'u' ? 'selected':''; ?>>123</option>
-                            <option value="d" <?php echo $editionOrder == 'd' ? 'selected':''; ?>>321</option>
+                            <option value="x" <?php echo $editionOrder == 'x' ? 'selected':''; ?>>No filter</option>
+                            <option value="u" <?php echo $editionOrder == 'u' ? 'selected':''; ?>>Ascending</option>
+                            <option value="d" <?php echo $editionOrder == 'd' ? 'selected':''; ?>>Descending</option>
                         </select>
                     </div>  
                 </div>
-
             </div>
             <div class="row m-0 mb-2">
                 <div class="col-6 row m-0">
@@ -185,13 +182,12 @@ if(isset($_POST['clear'])){
                         <div class="col-7 p-0 ">
                             <input type="range" class="form-range" min="0" max="500" step="1" id="wishlist_max_range">
                         </div>
-                        
                     </div>
                     <div class="col-2">
                         <select class="form-select" aria-label="wishlist select" name="wishlist_order">
-                        <option value="x" <?php echo $wishlistOrder == 'x' ? 'selected':''; ?>>X</option>
-                            <option value="u" <?php echo $wishlistOrder == 'u' ? 'selected':''; ?>>123</option>
-                            <option value="d" <?php echo $wishlistOrder == 'd' ? 'selected':''; ?>>321</option>
+                        <option value="x" <?php echo $wishlistOrder == 'x' ? 'selected':''; ?>>No filter</option>
+                            <option value="u" <?php echo $wishlistOrder == 'u' ? 'selected':''; ?>>Ascending</option>
+                            <option value="d" <?php echo $wishlistOrder == 'd' ? 'selected':''; ?>>Descending</option>
                         </select>
                     </div>  
                 </div>
@@ -208,17 +204,15 @@ if(isset($_POST['clear'])){
                         <div class="col-7 p-0 ">
                             <input type="range" class="form-range" min="0" max="500" step="1" id="quality_max_range">
                         </div>
-                        
                     </div>
                     <div class="col-2">
                         <select class="form-select" aria-label="quality_select" name="quality_order">
-                        <option value="x" <?php echo $qualityOrder == 'x' ? 'selected':''; ?>>X</option>
-                            <option value="u" <?php echo $qualityOrder == 'u' ? 'selected':''; ?>>123</option>
-                            <option value="d" <?php echo $qualityOrder == 'd' ? 'selected':''; ?>>321</option>
+                        <option value="x" <?php echo $qualityOrder == 'x' ? 'selected':''; ?>>No filter</option>
+                            <option value="u" <?php echo $qualityOrder == 'u' ? 'selected':''; ?>>Ascending</option>
+                            <option value="d" <?php echo $qualityOrder == 'd' ? 'selected':''; ?>>Descending</option>
                         </select>
                     </div>  
                 </div>
-
             </div>
             <div class="row m-0">
                 <div class="col-6 row m-0">
@@ -234,13 +228,12 @@ if(isset($_POST['clear'])){
                         <div class="col-7 p-0 ">
                             <input type="range" class="form-range" min="0" max="500" step="1" id="effort_max_range">
                         </div>
-                        
                     </div>
                     <div class="col-2">
                         <select class="form-select" aria-label="effort select" name="effort_order">
-                        <option value="x" <?php echo $effortOrder == 'x' ? 'selected':''; ?>>X</option>
-                            <option value="u" <?php echo $effortOrder == 'u' ? 'selected':''; ?>>123</option>
-                            <option value="d" <?php echo $effortOrder == 'd' ? 'selected':''; ?>>321</option>
+                        <option value="x" <?php echo $effortOrder == 'x' ? 'selected':''; ?>>No filter</option>
+                            <option value="u" <?php echo $effortOrder == 'u' ? 'selected':''; ?>>Ascending</option>
+                            <option value="d" <?php echo $effortOrder == 'd' ? 'selected':''; ?>>Descending</option>
                         </select>
                     </div>  
                 </div>
@@ -250,7 +243,6 @@ if(isset($_POST['clear'])){
                         <input class="form-check-input" type="checkbox" name="frame" id="frame" <?php echo $frame; ?>>            
                     </div>
                 </div>
-
             </div>
             <input type="submit" class="btn btn-light" value="Apply filter" name="filter">
             <input type="submit" class="btn btn-light" value="Clear" name="clear">
@@ -263,22 +255,22 @@ if(isset($_POST['clear'])){
         <script src="./js/filter.js"></script>
     <div class="row text-center m-0 w-100 border border-info p-1 collapse" id="status_w">
       <div class="col-4 m-0">
-        <h6>Waiting for a bot: <span id="waitngCards">2031 card</span></h6>
+        <h6>Waiting for a bot: <span id="waitngCards"></span></h6>
       </div>
       <div class="col-4 row m-0">
         <div class="col-12">
-          <h6>Downloading: <span id="downCards">100 card</span></h6>
+          <h6>Downloading: <span id="downCards"></span></h6>
         </div> 
         <div class="col-12">
-          <h6>Download time: <span id="downloadTime">1h 12m 32s</span></h6>
+          <h6>Download time: <span id="downloadTime"></span></h6>
         </div>
       </div>
       <div class="col-4 m-0">
-        <h6>Done: <span id="doneCards">35 card</span></h6>
+        <h6>Done: <span id="doneCards"></span></h6>
       </div>
     </div>
     <div class="text-center mb-2">
-          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#status_w" aria-expanded="false" aria-controls="status_w">
+          <button class="btn btn-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#status_w" aria-expanded="false" aria-controls="status_w">
           <i class="fa-solid fa-chevron-down bg-primary" style="color: #ffffff;"></i>
           </button>
     </div>

@@ -3,7 +3,6 @@ import discord
 import asyncio
 import logging
 import aiohttp
-import json
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -32,12 +31,10 @@ class bolondBot(discord.Client):
         self.tempcard = None
         self.data = []
         self.queuedCards = 0
-        self.needToLoad = False
         self.receiveEmptyLinks = None
         self.sync = True
 
     async def on_ready(self):
-
         ch.setFormatter(botLogger.CustomFormatter(self.user.name))
         logger.addHandler(ch)
         self.channel = self.get_channel(1181224154511462413)
@@ -105,6 +102,7 @@ class bolondBot(discord.Client):
                 if respText == 'okés':
                     self.queuedCards -= 1
                     logger.info(f"Cards left: {self.queuedCards}")
+                    logger.info(f"inv: {len(self.data)}")
                     if self.queuedCards == 0:
                         logger.info("All cards loaded from messages!")
                         await asyncio.sleep(10)
@@ -125,6 +123,14 @@ class bolondBot(discord.Client):
         
 async def getEmptyLinks():
     while True:
+        if client.queuedCards != 0 and client.sync == False:
+            tqc = client.queuedCards
+            await asyncio.sleep(20)
+            if tqc != 0 and tqc <= client.queuedCards:
+                logger.error(f"Bot is stuck! {tqc} cards left to load!")
+                client.queuedCards = 0
+                client.data = []
+                client.sync = True
         if client.queuedCards == 0 and client.sync == True:
             async with aiohttp.ClientSession() as session:
                 data = {"b": int(args.embedNum)}
