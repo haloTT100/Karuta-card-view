@@ -187,9 +187,9 @@ class kapcsolat{
         }
     }
 
-    public function loginUser($email, $password) {
-        // Retrieve hashed password for the provided email
-        $getUserQuery = "SELECT * FROM users WHERE email = '$email'";
+    public function loginUser($username, $password) {
+        // Retrieve hashed password for the provided user
+        $getUserQuery = "SELECT * FROM users WHERE username = '$username'";
         $result = $this->mysqli->query($getUserQuery);
 
         if ($result && $result->num_rows > 0) {
