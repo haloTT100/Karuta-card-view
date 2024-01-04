@@ -11,6 +11,9 @@
     array_push($minMaxArray, 0);
   }
  }
+
+
+
   $char_name = "";
   $series = "";
 
@@ -100,6 +103,15 @@ if(isset($_POST['clear'])){
                 <div class="col-6 row m-0">
                     <div class="col-3 p-1 text-end"><label for="char_name" class="form-label">Character name:</label></div>
                     <div class="col-7"><?php echo '<input type="text" class="form-control" name="char_name" id="char_name" placeholder="" value="'.$char_name.'">';?></div>
+                    <datalist id="char_name"> 
+                      <?php
+                       $cards = $conn->getAllCardsByUserID();
+                       foreach($cards as $card){
+                        echo '<option value="'.$card["char_name"].'">'.$card["char_name"].'</option>';
+                       }
+                       
+                      ?>
+                    </datalist> 
                     <div class="col-2">
                         <select class="form-select" aria-label="char_name_select" name="char_name_order">
                             <option value="x" <?php echo $charNameOrder == 'x' ? 'selected':''; ?>>X</option>
@@ -111,6 +123,16 @@ if(isset($_POST['clear'])){
                 <div class="col-6 row m-0">
                     <div class="col-3 p-1 text-end"><label for="series" class="form-label ">Series:</label></div>
                     <div class="col-7"><?php echo '<input type="text" class="form-control" name="series" id="series" placeholder="" value="'.$series.'">';?></div>
+                    <datalist id="series"> 
+                    <?php
+                       $cards = $conn->getAllCardsByUserID();
+                       foreach($cards as $card){
+                        echo '<option value="'.$card["series"].'">'.$card["series"].'</option>';
+                       }
+                       unset($cards);
+                       
+                      ?>
+                    </datalist> 
                     <div class="col-2">
                         <select class="form-select" aria-label="series_select" name="series_order">
                             <option value="x" <?php echo $seriesOrder == 'x' ? 'selected':''; ?>>X</option>
@@ -291,6 +313,7 @@ if(isset($_POST['clear'])){
 
     </div>
     </main>
+    <script src="/js/vagobabaszo.js"></script>
     <script>
 
       var limit = 100; //The number of records to display per request
