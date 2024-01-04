@@ -18,23 +18,20 @@ include "database.php";
 
 if(isset($_POST['logForm'])){
     $conn = new kapcsolat();
-    $res = $conn->loginUser($_REQUEST['email'], $_REQUEST['password']);
-    if($res == "Login successful!")
-        echo '<p class="alert alert-success">';
-    else
-        echo '<p class="alert alert-danger">';
-
-    echo $res;
-    echo '</p>';
-    sleep(2);
-    header('Location: /');
+    $res = $conn->loginUser($_REQUEST['username'], $_REQUEST['password']);
+    if($res != "Login successful!") {
+      echo '<p class="alert alert-danger">Wrong user or password!</p>';
+    }
+    else {
+      header("Location: /");
+    }
 }
 
 ?>
     <form id="loginForm" method="POST">
       <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
