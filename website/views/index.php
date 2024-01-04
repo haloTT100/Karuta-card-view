@@ -94,7 +94,18 @@ if(isset($_POST['clear'])){
     <title>Karuta card viewer</title>
   </head>
   <body>
-    <main class="px-3">
+    <main class="px-3" style="position: relative;">
+    <div class="toast" style="position: absolute; top: 0; right: 0;" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-content">
+        <i class="fas fa-solid fa-check check"></i>
+        <div class="message">
+          <span class="text text-1">Success</span>
+          <span class="text text-2">Your changes has been saved</span>
+        </div>
+      </div>
+      <i class="fa-solid fa-xmark close"></i>
+      <div class="progress"></div>
+    </div>
     <div class="text-center">
       <a class="btn btn-light m-3" href="/upload">Upload</a>
       <a class="btn btn-danger m-3" href="/logout">Logout</a>
