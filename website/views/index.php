@@ -309,7 +309,19 @@ if(isset($_POST['clear'])){
     <div class="row cards p-2 m-0" id="load_data">
         
         
-        
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto"></strong>
+            <small>Now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+          You copied a code!
+          </div>
+        </div>
+      </div>
 
               
 
