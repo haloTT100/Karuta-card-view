@@ -308,8 +308,13 @@ if(isset($_POST['clear'])){
 
     <div class="row cards p-2 m-0" id="load_data">
         
-        
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      
+
+              
+
+
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -319,11 +324,6 @@ if(isset($_POST['clear'])){
           </div>
         </div>
       </div>
-
-              
-
-
-    </div>
     </main>
     <script>
 
