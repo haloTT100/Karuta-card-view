@@ -314,6 +314,8 @@ if(isset($_POST['clear'])){
 
 
     </div>
+
+    </main>
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="copyToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
@@ -324,7 +326,6 @@ if(isset($_POST['clear'])){
           </div>
         </div>
       </div>
-    </main>
     <script>
 
       var limit = 100; //The number of records to display per request
